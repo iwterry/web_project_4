@@ -1,0 +1,7 @@
+@import url(./__vector/header__vector.css);
+@import url(./__line/header__line.css);
+
+.header {
+  width: 100%;
+  max-width: 880px;
+}

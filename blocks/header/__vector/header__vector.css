@@ -1,0 +1,11 @@
+.header__vector {
+  width: 126px;
+  margin-right: 27px;
+}
+
+@media screen and (min-width: 1280px) {
+  .header__vector {
+    width: 173px;
+    margin-right: 0;
+  }
+}
