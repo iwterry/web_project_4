@@ -1,0 +1,10 @@
+.location__content-wrapper {
+  padding: 25px 15px 31px 21px;
+  border-radius: 0 0 10px 10px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #fff;
+}
