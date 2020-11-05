@@ -14,6 +14,10 @@
   background-color: inherit;
 }
 
+.profile__add-btn:hover {
+  opacity: 0.6;
+}
+
 @media screen and (min-width: 1280px) {
   .profile__add-btn {
     width: 150px;

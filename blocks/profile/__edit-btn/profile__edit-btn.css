@@ -13,6 +13,10 @@
   background-color: inherit;
 }
 
+.profile__edit-btn:hover {
+  opacity: 0.6;
+}
+
 @media screen and (min-width: 1280px) {
   .profile__edit-btn {
     width: 24px;

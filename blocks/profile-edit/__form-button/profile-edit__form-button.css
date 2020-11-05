@@ -14,6 +14,10 @@
   background-color: #000;
 }
 
+.profile-edit__form-button:hover {
+  opacity: 0.8;
+}
+
 @media screen and (min-width: 1024px) {
   .profile-edit__form-button {
     width: 330px;
