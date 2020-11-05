@@ -1,16 +1,30 @@
 # Project 4: Around The U.S.
 
-### Overview
+## Overview
+* Description of the project and its functionality
+* Description of technologies and techniques used.
+* Links
 
-* Figma
-* Images
+**Description of the project and its functionality**
 
-**Figma**
+This is a project about allowing a user to create a profile name and description
+and showing different location / places in the U.S.
 
-* [Link to the project in Figma](https://www.figma.com/file/mUgu8OSHWE0M6p6vfwmdu9/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1)
+**Description of technologies and techniques used**
 
-**Images**
+* BEM methodology
+* HTML semantic elements
+* Absolute and fixed positioning
+* CSS responsive layouts
+  * CSS Flexbox Layout
+  * CSS Grid Layout
+* CSS calc function
+* CSS hovering effects
+* JavaScript (with DOM manipulation and handling events)
+* Compressing images
+* Deploy using GitHub Pages
 
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster. 
+**Links**
 
-Have fun with JavaScript!
+* [Link to the project specification on Figma](https://www.figma.com/file/mUgu8OSHWE0M6p6vfwmdu9/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1)
+* [Link to my implementation on GitHub Pages](https://iwterry.github.io/web_project_4/index.html)
