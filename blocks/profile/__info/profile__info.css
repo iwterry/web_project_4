@@ -1,9 +1,11 @@
 .profile__info {
+  position: relative;
   width: 282px;
   margin-top: 26.25px;
+
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 }
 
@@ -12,5 +14,7 @@
     width: 415px;
     margin-top: 0;
     margin-right: 165px;
+
+    justify-content: flex-start;
   }
 }

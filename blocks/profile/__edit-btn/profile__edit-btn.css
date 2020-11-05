@@ -1,10 +1,15 @@
 .profile__edit-btn {
+  position: absolute;
+  top: 4px;
+  right: 15px;
+  /* approximating positioning based on specs; turned to absolute positioning
+  so that the profile name can remain horizontally centered for screen widths < 1280px */
+
   box-sizing: border-box;
   width: 18px;
   height: 18px;
   padding: 0;
   border: 1px solid #fff;
-  margin-right: 15px;
 
   display: flex;
   justify-content: center;
@@ -19,8 +24,9 @@
 
 @media screen and (min-width: 1280px) {
   .profile__edit-btn {
+    position: static;
+
     width: 24px;
     height: 24px;
-    margin-right: 0;
   }
 }
