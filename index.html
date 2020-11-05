@@ -9,12 +9,28 @@
 <body class="root">
   <div class="page">
     <header class="header">
-      <img src="./images/header-vector.svg" alt="Around The U.S." class="header__vector">
-      <div class="header__line"></div>
+      <h1 class="header__webpage-title">
+        <img src="./images/header-vector.svg" alt="Around The U.S." class="header__vector">
+      </h1>
+      <!-- This felt the most appropriately place for an <h1> despite the <h1> containing no text. -->
     </header>
+    
     <main class="main-content">
+      <section class="profile">
+        <img src="./images/profile-avatar.jpg" alt="profile avatar" class="profile__avatar">
+        <div class="profile__info">
+          <h2 class="profile__name">Jacques Cousteau</h2>
+          <button class="profile__edit-btn">
+            <img src="./images/profile-edit-icon.svg" alt="edit profile" class="profile__edit-icon">
+          </button>
+          <p class="profile__self-description">Explorer</p>
+        </div>
+        <button class="profile__add-btn">
+          <img src="./images/profile-add-icon.svg" alt="add location" class="profile__add-icon">
+        </button>
+      </section>
+
       <section class="profile-edit profile-edit_hidden">
-     <!--  <div class="profile-edit__overlay"></div>--> 
         <div class="profile-edit__form-container">
           <img src="./images/form-close-icon.svg" alt="close form" class="profile-edit__close-icon">
           <form class="profile-edit__form">
@@ -25,19 +41,7 @@
           </form>
         </div>
       </section>
-      <section class="profile">
-        <img src="./images/profile-avatar.jpg" alt="profile avatar" class="profile__avatar">
-        <div class="profile__info">
-          <p class="profile__name">Jacques Cousteau</p>
-          <button class="profile__edit-btn">
-            <img src="./images/profile-edit-icon.svg" alt="edit profile" class="profile__edit-icon">
-          </button>
-          <p class="profile__self-description">Explorer</p>
-        </div>
-        <button class="profile__add-btn">
-          <img src="./images/profile-add-icon.svg" alt="add location" class="profile__add-icon">
-        </button>
-      </section>
+
       <section class="locations">
         <ul class="locations__collection">
           <li class="location">
@@ -85,6 +89,7 @@
         </ul>
       </section>
     </main>
+
     <footer class="footer">
       <p class="footer__copyright">
         &copy; 2020 Around The U.S.

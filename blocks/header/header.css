@@ -1,7 +1,16 @@
 @import url(./__vector/header__vector.css);
-@import url(./__line/header__line.css);
+@import url(./__webpage-title/header__webpage-title.css);
 
 .header {
   width: 100%;
   max-width: 880px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  /* border-color same as #545454 with opacity at 0.7 for .header */
+}
+
+@media screen and (min-width: 1280px) {
+  .header {
+    padding-bottom: 41px;
+  }
 }
