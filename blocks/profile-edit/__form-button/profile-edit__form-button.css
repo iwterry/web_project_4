@@ -1,0 +1,27 @@
+.profile-edit__form-button {
+  width: 238px;
+  padding: 14px 0;
+  border-style: none;
+  border-radius: 2px;
+  margin-top: 45px;
+
+  font-weight: bold;
+  font-size: 14px;
+  line-height: calc(17 / 14); /* 17px */
+  text-align: center;
+
+  color: #fff;
+  background-color: #000;
+}
+
+@media screen and (min-width: 1024px) {
+  .profile-edit__form-button {
+    width: 330px;
+    padding-top: 13.66px;
+    padding-bottom: 18.49px;
+    margin-top: 48px;
+
+    font-size: 18px;
+    line-height: calc(22 / 18); /* 22px */ 
+  }
+}

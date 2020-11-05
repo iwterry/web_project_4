@@ -1,0 +1,4 @@
+.profile-edit__form-container {
+  position: relative;
+  /* so that the close will be positioned relatively to this */
+}

@@ -1,0 +1,16 @@
+.profile-edit__close-icon {
+  position: absolute;
+  top: calc(-26px + -14px);
+  right: 0;
+  /* top and right give positioning very similar to specs */
+  width: 26px;
+}
+
+@media screen and (min-width: 1024px) {
+  .profile-edit__close-icon {
+    top: -35px;
+    right: -35px;
+    /* top and right gives positioning very similar to specs. */
+    width: 40px;
+  }
+}
