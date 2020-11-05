@@ -8,7 +8,7 @@
 **Description of the project and its functionality**
 
 This is a project about allowing a user to create a profile name and description
-and showing different location / places in the U.S.
+and showing different locations / places in the U.S.
 
 **Description of technologies and techniques used**
 
