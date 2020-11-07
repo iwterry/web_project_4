@@ -27,18 +27,6 @@
         </button>
       </section>
 
-      <section class="profile-edit profile-edit_hidden">
-        <div class="profile-edit__form-container">
-          <img src="./images/form-close-icon.svg" alt="close form" class="profile-edit__close-icon">
-          <form class="profile-edit__form">
-            <h2 class="profile-edit__form-title">Edit Profile</h2>
-            <input type="text" class="profile-edit__form-input profile-edit__form-input_type_name" placeholder="Name" name="name">
-            <input type="text" class="profile-edit__form-input profile-edit__form-input_type_about-me" placeholder="About me" name="about_me">
-            <input type="submit" class="profile-edit__form-button" value="Save">
-          </form>
-        </div>
-      </section>
-
       <section class="locations">
         <ul class="locations__collection">
           <li class="location">
@@ -92,6 +80,18 @@
         &copy; 2020 Around The U.S.
       </p>
     </footer>
+
+    <section class="profile-edit">
+      <div class="profile-edit__form-container">
+        <img src="./images/form-close-icon.svg" alt="close form" class="profile-edit__close-icon">
+        <form class="profile-edit__form">
+          <h2 class="profile-edit__form-title">Edit Profile</h2>
+          <input type="text" class="profile-edit__form-input profile-edit__form-input_type_name" placeholder="Name" name="name">
+          <input type="text" class="profile-edit__form-input profile-edit__form-input_type_about-me" placeholder="About me" name="about_me">
+          <input type="submit" class="profile-edit__form-button" value="Save">
+        </form>
+      </div>
+    </section>
   </div>
   <script src="scripts/index.js"></script>
 </body>

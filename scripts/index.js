@@ -1,6 +1,6 @@
 function handleEditProfile() {
   let profileEditSection = document.querySelector('.profile-edit');
-  profileEditSection.classList.remove('profile-edit_hidden');
+  profileEditSection.classList.add('profile-edit_opened');
 }
 
 function handleSaveProfile(event) {
@@ -33,7 +33,7 @@ function handleCloseProfileForm() {
   aboutMeInputElement.value = '';
 
   let profileEditSection = document.querySelector('.profile-edit');
-  profileEditSection.classList.add('profile-edit_hidden');
+  profileEditSection.classList.remove('profile-edit_opened');
 }
 
 let editButton = document.querySelector('.profile__edit-btn');
