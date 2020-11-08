@@ -10,10 +10,7 @@
   /* overflow-y is visible as line-height is greater than element hight */
   white-space: nowrap;
   text-overflow: ellipsis;
-  text-align: center;
-
-  overflow: visible; 
- 
+  text-align: center; 
 }
 
 @media screen and (min-width: 1280px) {
