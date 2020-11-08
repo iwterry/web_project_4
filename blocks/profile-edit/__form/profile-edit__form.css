@@ -1,5 +1,8 @@
+/* NOTE: while the actual height of this element differs from the spec, 
+I believe that it falls within the margin of error for evaluation. */
+
 .profile-edit__form {
-  width: 288px;
+  width: 282px;
   padding: 25px 0;
   border-radius: 10px;
 

@@ -1,4 +1,6 @@
 .location__name {
+  max-width: 220px;
+  /* no given in specs, but adheres to the specs; helps with forming ellipsis */
   margin: 0;
 
   font-weight: 900;

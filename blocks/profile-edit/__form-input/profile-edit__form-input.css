@@ -1,6 +1,6 @@
 .profile-edit__form-input {
   width: 238px;
-  padding: 0 0 13px 0;
+  padding: 0 0 10px 0;
   border-style: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   
@@ -17,6 +17,6 @@
 
 @media screen and (min-width: 1024px) {
   .profile-edit__form-input {
-    width: 330px;
+    width: 358px;
   }
 }

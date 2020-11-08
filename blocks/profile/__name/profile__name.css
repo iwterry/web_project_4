@@ -1,22 +1,29 @@
 .profile__name {
-  margin: 0; 
+  max-height: 22px;
+  margin: 0;
 
   font-weight: 500;
   font-size: 22px;
   line-height: calc(27 / 22); /* 27px */
 
-  overflow: hidden;
+  overflow: hidden visible;
+  /* overflow-y is visible as line-height is greater than element hight */
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: center;
+
+  overflow: visible; 
+ 
 }
 
 @media screen and (min-width: 1280px) {
   .profile__name {
+    display: inline-block;
     max-width: 373px;
     /* not provided by specs, but helps ellipsis to be formed when
      user enters a name with many characters while maintaining edit
      button's position according to the specs. */
+    max-height: 39px;
     margin-right: 18px;
 
     font-size: 42px;

@@ -11,5 +11,10 @@
 @media screen and (min-width: 1024px) {
   .profile-edit__form-title {
     max-width: 330px;
+    margin-left: 36px;
+    align-self: flex-start;
+
+    font-size: 24px;
+    line-height: calc(29 / 24); /* 29px */
   }
 }
