@@ -1,6 +1,20 @@
 function handleEditProfile() {
   let profileEditSection = document.querySelector('.profile-edit');
   profileEditSection.classList.add('profile-edit_opened');
+
+  // retrieve input elements
+  let form = document.querySelector('.profile-edit__form');
+  let nameInputElement = form.querySelector('.profile-edit__form-input_type_name');
+  let aboutMeInputElement = form.querySelector('.profile-edit__form-input_type_about-me');
+
+  // retreive text elements
+  let profile = document.querySelector('.profile');
+  let profileName = profile.querySelector('.profile__name');
+  let profileSelfDescription = profile.querySelector('.profile__self-description');
+
+  // fill in input values with the given text content
+  nameInputElement.value = profileName.textContent;
+  aboutMeInputElement.value = profileSelfDescription.textContent;
 }
 
 function handleSaveProfile(event) {
