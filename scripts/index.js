@@ -1,18 +1,18 @@
+let profileEditSection = document.querySelector('.profile-edit');
+let form = document.querySelector('.profile-edit__form');
+let nameInputElement = form.querySelector('.profile-edit__form-input_type_name');
+let aboutMeInputElement = form.querySelector('.profile-edit__form-input_type_about-me');
+let profileName = document.querySelector('.profile__name');
+let profileSelfDescription = document.querySelector('.profile__self-description');
+let editButton = document.querySelector('.profile__edit-btn');
+let closeButton = document.querySelector('.profile-edit__close-btn');
+
+
 function handleEditProfile() {
-  let profileEditSection = document.querySelector('.profile-edit');
+  // show the form
   profileEditSection.classList.add('profile-edit_opened');
 
-  // retrieve input elements
-  let form = document.querySelector('.profile-edit__form');
-  let nameInputElement = form.querySelector('.profile-edit__form-input_type_name');
-  let aboutMeInputElement = form.querySelector('.profile-edit__form-input_type_about-me');
-
-  // retrieve text elements
-  let profile = document.querySelector('.profile');
-  let profileName = profile.querySelector('.profile__name');
-  let profileSelfDescription = profile.querySelector('.profile__self-description');
-
-  // fill in input values with the given text content
+  // fill in input values with the given text content of the profile
   nameInputElement.value = profileName.textContent;
   aboutMeInputElement.value = profileSelfDescription.textContent;
 }
@@ -20,40 +20,19 @@ function handleEditProfile() {
 function handleSaveProfile(event) {
   event.preventDefault();
 
-  // retrieve elements that have user input
-  let form = document.querySelector('.profile-edit__form');
-  let nameInputElement = form.querySelector('.profile-edit__form-input_type_name');
-  let aboutMeInputElement = form.querySelector('.profile-edit__form-input_type_about-me');
-
-  // retrieve elements where the user input will go
-  let profile = document.querySelector('.profile');
-  let profileName = profile.querySelector('.profile__name');
-  let profileSelfDescription = profile.querySelector('.profile__self-description');
-
-  // place user input where it needs to go
+  // fill in profile information from user input
   profileName.textContent = nameInputElement.value;
   profileSelfDescription.textContent = aboutMeInputElement.value;
 
-  handleCloseProfileForm();
-}
-
-function handleCloseProfileForm() {
-  let form = document.querySelector('.profile-edit__form');
-  let nameInputElement = form.querySelector('.profile-edit__form-input_type_name');
-  let aboutMeInputElement = form.querySelector('.profile-edit__form-input_type_about-me');
-
-  // close and reset form
-  nameInputElement.value = '';
-  aboutMeInputElement.value = '';
-
-  let profileEditSection = document.querySelector('.profile-edit');
+  // hide the form
   profileEditSection.classList.remove('profile-edit_opened');
 }
 
-let editButton = document.querySelector('.profile__edit-btn');
-let saveButton = document.querySelector('.profile-edit__form-button');
-let closeButton = document.querySelector('.profile-edit__close-btn');
+function handleCloseProfileForm() {
+  profileEditSection.classList.remove('profile-edit_opened');
+}
+
 
 editButton.addEventListener('click', handleEditProfile);
-saveButton.addEventListener('click', handleSaveProfile);
+form.addEventListener('submit', handleSaveProfile);
 closeButton.addEventListener('click', handleCloseProfileForm);
