@@ -11,10 +11,10 @@
   padding: 0;
   border: 1px solid #fff;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+  background-image: url(../../../images/profile-edit-icon.svg);
+  background-size: 7.5px;
+  background-position: center;
+  background-repeat: no-repeat;
   background-color: inherit;
 }
 
@@ -26,8 +26,9 @@
 @media screen and (min-width: 1280px) {
   .profile__edit-btn {
     position: static;
-
     width: 24px;
     height: 24px;
+
+    background-size: 10px;
   }
 }
