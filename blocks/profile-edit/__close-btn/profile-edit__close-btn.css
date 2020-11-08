@@ -12,6 +12,8 @@
   background-size: cover;
   background-position: center;
   background-color: inherit;
+
+  cursor: pointer;
 }
 
 .profile-edit__close-btn:hover {
