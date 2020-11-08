@@ -7,7 +7,7 @@ function handleEditProfile() {
   let nameInputElement = form.querySelector('.profile-edit__form-input_type_name');
   let aboutMeInputElement = form.querySelector('.profile-edit__form-input_type_about-me');
 
-  // retreive text elements
+  // retrieve text elements
   let profile = document.querySelector('.profile');
   let profileName = profile.querySelector('.profile__name');
   let profileSelfDescription = profile.querySelector('.profile__self-description');
@@ -25,7 +25,7 @@ function handleSaveProfile(event) {
   let nameInputElement = form.querySelector('.profile-edit__form-input_type_name');
   let aboutMeInputElement = form.querySelector('.profile-edit__form-input_type_about-me');
 
-  // retreive elements where the user input will go
+  // retrieve elements where the user input will go
   let profile = document.querySelector('.profile');
   let profileName = profile.querySelector('.profile__name');
   let profileSelfDescription = profile.querySelector('.profile__self-description');
