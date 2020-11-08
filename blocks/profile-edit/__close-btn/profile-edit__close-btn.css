@@ -1,20 +1,29 @@
-.profile-edit__close-icon {
+.profile-edit__close-btn {
   position: absolute;
   top: calc(-26px + -14px);
   right: 0;
   /* top and right give positioning very similar to specs */
   width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+
+  background-image: url(../../../images/form-close-icon.svg);
+  background-size: cover;
+  background-position: center;
+  background-color: inherit;
 }
 
-.profile-edit__close-icon:hover {
+.profile-edit__close-btn:hover {
   opacity: 0.6;
 }
 
 @media screen and (min-width: 1024px) {
-  .profile-edit__close-icon {
+  .profile-edit__close-btn {
     top: -35px;
     right: -35px;
     /* top and right gives positioning very similar to specs. */
     width: 40px;
+    height: 40px;
   }
 }

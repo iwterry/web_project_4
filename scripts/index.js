@@ -38,8 +38,8 @@ function handleCloseProfileForm() {
 
 let editButton = document.querySelector('.profile__edit-btn');
 let saveButton = document.querySelector('.profile-edit__form-button');
-let closeIcon = document.querySelector('.profile-edit__close-icon');
+let closeButton = document.querySelector('.profile-edit__close-btn');
 
 editButton.addEventListener('click', handleEditProfile);
 saveButton.addEventListener('click', handleSaveProfile);
-closeIcon.addEventListener('click', handleCloseProfileForm);
+closeButton.addEventListener('click', handleCloseProfileForm);
