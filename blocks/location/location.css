@@ -1,7 +1,7 @@
 @import url(./__image/location__image.css);
 @import url(./__content-wrapper/location__content-wrapper.css);
 @import url(./__name/location__name.css);
-@import url(./__like-icon/location__like-icon.css);
+@import url(./__like-btn/location__like-btn.css);
 
 .location {
   width: 282px;

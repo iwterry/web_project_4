@@ -1,0 +1,15 @@
+.location__like-btn {
+  width: 20.76px;
+  height: 18.13px;
+  padding: 0;
+  border: none;
+
+  background-image: url(../../../images/location-like-icon.svg);
+  background-size: cover;
+  background-position: center;
+  background-color: inherit;
+}
+
+.location__like-btn:hover {
+  opacity: 0.6;
+}
