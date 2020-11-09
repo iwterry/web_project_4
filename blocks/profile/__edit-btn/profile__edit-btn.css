@@ -29,6 +29,18 @@
     width: 24px;
     height: 24px;
 
+    transform: translateY(-8px);
+    /* This is used for alignment reasons to correspond to the specs. */
+    /* 
+      This can also be done using the following declarations:
+        position: relative;
+        top: -8px;
+        right: 0;
+
+      but I just chose to transform instead.
+    */
+
+
     background-size: 10px;
   }
 }
