@@ -1,4 +1,7 @@
 .profile__name {
+  max-width: 196px;
+  /* used the width provided by specs to be helpful for ellipsis
+    to be formed when user enters more text. */
   margin: 0;
 
   font-weight: 500;
@@ -15,9 +18,8 @@
   .profile__name {
     display: inline-block;
     max-width: 373px;
-    /* not provided by specs, but helps ellipsis to be formed when
-     user enters a name with many characters while maintaining edit
-     button's position according to the specs. */
+    /* used the width provided by specs to be helpful for ellipsis
+      to be formed when user enters more text. */
     margin-right: 18px;
 
     font-size: 42px;
