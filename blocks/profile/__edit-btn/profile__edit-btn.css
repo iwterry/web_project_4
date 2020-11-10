@@ -1,10 +1,4 @@
 .profile__edit-btn {
-  position: absolute;
-  top: 3px;
-  right: 16px;
-  /* approximating positioning based on specs; turned to absolute positioning
-  so that the profile name can remain horizontally centered for screen widths < 1280px */
-
   box-sizing: border-box;
   width: 18px;
   height: 18px;
@@ -16,6 +10,8 @@
   background-position: center;
   background-repeat: no-repeat;
   background-color: inherit;
+
+  grid-area: profile-edit-btn;
 }
 
 .profile__edit-btn:hover {
@@ -25,21 +21,8 @@
 
 @media screen and (min-width: 1280px) {
   .profile__edit-btn {
-    position: static;
     width: 24px;
     height: 24px;
-
-    transform: translateY(-8px);
-    /* This is used for alignment reasons to correspond to the specs. */
-    /* 
-      This can also be done using the following declarations:
-        position: relative;
-        top: -8px;
-        right: 0;
-
-      but I just chose to transform instead.
-    */
-
 
     background-size: 10px;
   }
