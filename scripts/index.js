@@ -1,13 +1,52 @@
-let profileEditSection = document.querySelector('.profile-edit');
-let form = document.querySelector('.profile-edit__form');
-let nameInputElement = form.querySelector('.profile-edit__form-input_type_name');
-let aboutMeInputElement = form.querySelector('.profile-edit__form-input_type_about-me');
-let profileName = document.querySelector('.profile__name');
-let profileSelfDescription = document.querySelector('.profile__self-description');
-let editButton = document.querySelector('.profile__edit-btn');
-let closeButton = document.querySelector('.profile-edit__close-btn');
+const profileEditSection = document.querySelector('.profile-edit');
+const form = document.querySelector('.profile-edit__form');
+const nameInputElement = form.querySelector('.profile-edit__form-input_type_name');
+const aboutMeInputElement = form.querySelector('.profile-edit__form-input_type_about-me');
+const profileName = document.querySelector('.profile__name');
+const profileSelfDescription = document.querySelector('.profile__self-description');
+const editButton = document.querySelector('.profile__edit-btn');
+const closeButton = document.querySelector('.profile-edit__close-btn');
+
+const initialLocations = [
+  {
+    name: "Yosemite Valley",
+    link: "./images/location-yosemite-valley.jpg"
+  },
+  {
+    name: "Lake Louise",
+    link: "./images/location-lake-louise.jpg"
+  },
+  {
+    name: "Bald Mountains",
+    link: "./images/location-bald-mountains.jpg"
+  },
+  {
+    name: "Latemar",
+    link: "./images/location-latemar.jpg"
+  },
+  {
+    name: "Vanoise National Park",
+    link: "./images/location-vanoise-national-park.jpg"
+  },
+  {
+    name: "Lago di Braies",
+    link: "./images/location-lago-di-braies.jpg"
+  }
+];
+
+const locationsCollection = document.querySelector('.locations__collection');
+const locationTemplate = document.querySelector('#location').content;
 
 
+// ###### helper functions ########
+function addLocation({ name: locationName, link: locationImageLink }) {
+  const locationElement = locationTemplate.cloneNode(true);
+  locationElement.querySelector('.location__name').textContent = locationName;
+  locationElement.querySelector('.location__image').style.backgroundImage = `url(${locationImageLink})`;
+  locationsCollection.append(locationElement);
+}
+
+// ####### defining event handlers #######
 function handleEditProfile() {
   // fill in input values with the given text content of the profile
   nameInputElement.value = profileName.textContent;
@@ -32,7 +71,10 @@ function handleCloseProfileForm() {
   profileEditSection.classList.remove('profile-edit_opened');
 }
 
+// add initial locations to the DOM
+initialLocations.forEach(addLocation);
 
+// ####### adding event handlers #######
 editButton.addEventListener('click', handleEditProfile);
 form.addEventListener('submit', handleSaveProfile);
 closeButton.addEventListener('click', handleCloseProfileForm);

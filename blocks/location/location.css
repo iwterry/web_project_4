@@ -4,7 +4,6 @@
 @import url(./__like-btn/location__like-btn.css);
 
 .location {
-  width: 282px;
   display: flex;
   flex-direction: column;
 }

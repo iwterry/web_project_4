@@ -25,48 +25,6 @@
 
       <section class="locations">
         <ul class="locations__collection">
-          <li class="location">
-            <img src="./images/location-yosemite-valley.jpg" alt="Yosemite Valley" class="location__image">
-            <div class="location__content-wrapper">
-              <h2 class="location__name">Yosemite Valley</h2>
-              <button type="button" aria-label="Like" class="location__like-btn"></button>  
-            </div>
-          </li>
-          <li class="location">
-            <img src="./images/location-lake-louise.jpg" alt="Lake Louise" class="location__image">
-            <div class="location__content-wrapper">
-              <h2 class="location__name">Lake Louise</h2>
-              <button type="button" aria-label="Like" class="location__like-btn"></button>  
-            </div>
-          </li>
-          <li class="location">
-            <img src="./images/location-bald-mountains.jpg" alt="Bald Mountains" class="location__image">
-            <div class="location__content-wrapper">
-              <h2 class="location__name">Bald Mountains</h2>
-              <button type="button" aria-label="Like" class="location__like-btn"></button>  
-            </div>
-          </li>
-          <li class="location">
-            <img src="./images/location-latemar.jpg" alt="Latemar" class="location__image">
-            <div class="location__content-wrapper">
-              <h2 class="location__name">Latemar</h2>
-              <button type="button" aria-label="Like" class="location__like-btn"></button>  
-            </div>
-          </li>
-          <li class="location">
-            <img src="./images/location-vanoise-national-park.jpg" alt="Vanoise National Park" class="location__image">
-            <div class="location__content-wrapper">
-              <h2 class="location__name">Vanoise National Park</h2>
-              <button type="button" aria-label="Like" class="location__like-btn"></button>  
-            </div>
-          </li>
-          <li class="location">
-            <img src="./images/location-lago-di-braies.jpg" alt="Lago di Braies" class="location__image">
-            <div class="location__content-wrapper">
-              <h2 class="location__name">Lago di Braies</h2>
-              <button type="button" aria-label="Like" class="location__like-btn"></button>             
-            </div>
-          </li>
         </ul>
       </section>
     </main>
@@ -76,6 +34,16 @@
         &copy; 2020 Around The U.S.
       </p>
     </footer>
+
+    <template id="location">
+      <li class="location">
+        <div class="location__image"></div>
+        <div class="location__content-wrapper">
+          <h2 class="location__name"></h2>
+          <button type="button" aria-label="Like" class="location__like-btn"></button>  
+        </div>
+      </li>
+    </template>
 
     <div class="profile-edit">
       <div class="profile-edit__form-container">
