@@ -1,0 +1,18 @@
+.overlay__close-btn {
+  position: absolute;
+
+  padding: 0;
+  border: none;
+
+  background-image: url(../../../images/profile-add-icon.svg);
+  background-size: cover;
+  background-position: center;
+  background-color: inherit;
+
+  cursor: pointer;
+  transform: rotate(45deg);
+}
+
+.overlay__close-btn:hover {
+  opacity: 0.6;
+}

@@ -47,26 +47,82 @@
       </li>
     </template>
 
-    <div class="profile-edit">
-      <div class="profile-edit__form-container">
-        <button type="button" aria-label="Close" class="profile-edit__close-btn"></button>
-        <form method="post" action="#" name="profile_edit_form" class="profile-edit__form">
-          <h3 class="profile-edit__form-title">Edit profile</h3>
+    <div class="overlay">
+      <div class="overlay__wrapper">
+        <button 
+          type="button"
+          aria-label="Close"
+          class="overlay__close-btn overlay__close-btn_type_profile-edit"
+        >
+        </button>
+        <form
+          method="post"
+          action="#"
+          name="profile_edit_form" 
+          class="web-project-four-form web-project-four-form_type_profile-edit"
+        >
+          <h3 class="web-project-four-form__title web-project-four-form__title_type_profile-edit">
+            Edit profile
+          </h3>
           <input 
             type="text"
             aria-label="Name"
             name="name"
-            class="profile-edit__form-input profile-edit__form-input_type_name"
+            class="web-project-four-form__input web-project-four-form__input_type_profile-name"
             placeholder="Name"
           >
           <input
             type="text"
             aria-label="About me"
             name="about_me"
-            class="profile-edit__form-input profile-edit__form-input_type_about-me"
+            class="web-project-four-form__input web-project-four-form__input_type_profile-about-me"
             placeholder="About me"
           >
-          <button type="submit" class="profile-edit__form-button">Save</button>
+          <button
+            type="submit" 
+            class="web-project-four-form__submit-btn web-project-four-form__submit-btn_type_profile-edit"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="overlay">
+      <div class="overlay__wrapper">
+        <button
+          type="button"
+          aria-label="Close"
+          class="overlay__close-btn overlay__close-btn_type_location-create"
+        >
+        </button>
+        <form
+          method="post"
+          action="#"
+          name="location_create_form"
+          class="web-project-four-form web-project-four-form_type_location-create">
+          <h3 class="web-project-four-form__title web-project-four-form__title_type_location-create">
+            New place
+          </h3>
+          <input 
+            type="text"
+            aria-label="Title"
+            name="title"
+            class="web-project-four-form__input web-project-four-form__input_type_location-title"
+            placeholder="Title"
+          >
+          <input
+            type="text"
+            aria-label="Image link"
+            name="image_link"
+            class="web-project-four-form__input web-project-four-form__input_type_location-image-link"
+            placeholder="Image link"
+          >
+          <button
+            type="submit"
+            class="web-project-four-form__submit-btn web-project-four-form__submit-btn_type_location-create"
+          >
+            Create
+          </button>
         </form>
       </div>
     </div>

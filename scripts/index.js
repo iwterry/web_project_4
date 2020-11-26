@@ -1,11 +1,14 @@
-const profileEditSection = document.querySelector('.profile-edit');
-const form = document.querySelector('.profile-edit__form');
-const nameInputElement = form.querySelector('.profile-edit__form-input_type_name');
-const aboutMeInputElement = form.querySelector('.profile-edit__form-input_type_about-me');
+const profileEditSection = document.querySelector('.overlay');
+const closeButton = document.querySelector('.overlay__close-btn');
+
+const form = document.querySelector('.web-project-four-form');
+const nameInputElement = form.querySelector('.web-project-four-form__input_type_profile-name');
+const aboutMeInputElement = form.querySelector('.web-project-four-form__input_type_profile-about-me');
+
 const profileName = document.querySelector('.profile__name');
 const profileSelfDescription = document.querySelector('.profile__self-description');
 const editButton = document.querySelector('.profile__edit-btn');
-const closeButton = document.querySelector('.profile-edit__close-btn');
+
 const locationsCollection = document.querySelector('.locations__collection');
 const locationTemplate = document.querySelector('#location').content;
 
@@ -44,7 +47,7 @@ function handleEditProfile() {
   aboutMeInputElement.value = profileSelfDescription.textContent;
   
   // show the form
-  profileEditSection.classList.add('profile-edit_opened');
+  profileEditSection.classList.add('overlay_opened');
 }
 
 function handleDeleteLocation(evt) {
@@ -69,7 +72,7 @@ function handleSaveProfile(event) {
 }
 
 function handleCloseProfileForm() {
-  profileEditSection.classList.remove('profile-edit_opened');
+  profileEditSection.classList.remove('overlay_opened');
 }
 
 // ###### helper functions ########

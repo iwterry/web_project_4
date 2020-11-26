@@ -1,0 +1,16 @@
+@media screen and (max-width: 1023px) {
+  .web-project-four-form__input_type_profile-name {
+    width: 238px;
+    padding-bottom: 12px;
+    margin-top: 75px;
+
+    font-size: 14px;
+    line-height: calc(17 / 14); /* 17px */
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .web-project-four-form__input_type_profile-name {
+    margin-top: 54px;
+  }
+}

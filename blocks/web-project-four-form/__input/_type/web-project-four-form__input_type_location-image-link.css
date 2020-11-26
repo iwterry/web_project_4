@@ -1,0 +1,16 @@
+@media screen and (max-width: 1023px) {  
+  .web-project-four-form__input_type_location-image-link {
+    width: 200px;
+    padding-bottom: 11px;
+    margin-top: 20px;
+
+    font-size: 12px;
+    line-height: calc(15 / 12); /* 15px */
+  }
+}
+
+@media screen and (min-width: 1024px) {  
+  .web-project-four-form__input_type_location-image-link {
+    margin-top: 30px;
+  }
+}

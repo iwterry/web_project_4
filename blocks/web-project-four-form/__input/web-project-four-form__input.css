@@ -1,14 +1,10 @@
-.profile-edit__form-input {
-  width: 238px;
-  padding: 0 0 10px 0;
+.web-project-four-form__input {
+  padding: 0;
   border-style: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  
-  font-size: 14px;
-  line-height: calc(17 / 14); /* 17px */
 }
 
-.profile-edit__form-input:focus {
+.web-project-four-form__input:focus {
   outline: 2px solid #2f80ed;
   /* Specs do not seem to mention this, but I saw something similar in the project 4 video. */
   /* I am just approximating. */
@@ -16,7 +12,11 @@
 
 
 @media screen and (min-width: 1024px) {
-  .profile-edit__form-input {
+  .web-project-four-form__input {
     width: 358px;
+    padding-bottom: 12.34px;
+
+    font-size: 14px;
+    line-height: calc(17 / 14); /* 17px */
   }
 }

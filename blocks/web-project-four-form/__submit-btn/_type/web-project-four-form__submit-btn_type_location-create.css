@@ -1,0 +1,7 @@
+@media screen and (max-width: 1023px) {
+  .web-project-four-form__submit-btn_type_location-create {
+    width: 200px;
+    padding: 12px 0 14px 0;
+    margin-top: 36px;
+  }
+}

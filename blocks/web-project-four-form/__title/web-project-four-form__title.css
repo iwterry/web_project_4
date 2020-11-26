@@ -1,6 +1,5 @@
-.profile-edit__form-title {
+.web-project-four-form__title {
   width: 100%;
-  max-width: 238px;
   margin: 0;
 
   font-weight: 900;
@@ -9,7 +8,7 @@
 }
 
 @media screen and (min-width: 1024px) {
-  .profile-edit__form-title {
+  .web-project-four-form__title {
     max-width: 330px;
     margin-left: 36px;
     align-self: flex-start;

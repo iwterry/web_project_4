@@ -1,9 +1,0 @@
-.profile-edit__form-input_type_name {
-  margin-top: 75px;
-}
-
-@media screen and (min-width: 1024px) {
-  .profile-edit__form-input_type_name {
-    margin-top: 54px;
-  }
-}
