@@ -1,8 +1,12 @@
 .location__image {
+  box-sizing: border-box;
   width: 282px;
   height: 282px;
+  padding: 18px 15px 0 0;
   border-radius: 10px 10px 0 0;
 
   background-position: center;
   background-size: cover;
+
+  text-align: right;
 }

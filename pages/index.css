@@ -6,6 +6,7 @@
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/locations/locations.css);
 @import url(../blocks/location/location.css);
+@import url(../blocks/location/_inactive/location_inactive.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/profile-edit/profile-edit.css);
 @import url(../blocks/profile-edit/_opened/profile-edit_opened.css);

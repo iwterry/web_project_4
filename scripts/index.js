@@ -6,6 +6,8 @@ const profileName = document.querySelector('.profile__name');
 const profileSelfDescription = document.querySelector('.profile__self-description');
 const editButton = document.querySelector('.profile__edit-btn');
 const closeButton = document.querySelector('.profile-edit__close-btn');
+const locationsCollection = document.querySelector('.locations__collection');
+const locationTemplate = document.querySelector('#location').content;
 
 const initialLocations = [
   {
@@ -34,17 +36,6 @@ const initialLocations = [
   }
 ];
 
-const locationsCollection = document.querySelector('.locations__collection');
-const locationTemplate = document.querySelector('#location').content;
-
-
-// ###### helper functions ########
-function addLocation({ name: locationName, link: locationImageLink }) {
-  const locationElement = locationTemplate.cloneNode(true);
-  locationElement.querySelector('.location__name').textContent = locationName;
-  locationElement.querySelector('.location__image').style.backgroundImage = `url(${locationImageLink})`;
-  locationsCollection.append(locationElement);
-}
 
 // ####### defining event handlers #######
 function handleEditProfile() {
@@ -54,6 +45,18 @@ function handleEditProfile() {
   
   // show the form
   profileEditSection.classList.add('profile-edit_opened');
+}
+
+function handleDeleteLocation(evt) {
+  const eventTarget = evt.target;
+  eventTarget.closest('.location')
+    .classList
+    .add('location_inactive');
+}
+
+function handleLikeLocation(evt) {
+  const eventTarget = evt.target;
+  eventTarget.classList.toggle('location__like-btn_active');
 }
 
 function handleSaveProfile(event) {
@@ -70,6 +73,18 @@ function handleSaveProfile(event) {
 function handleCloseProfileForm() {
   profileEditSection.classList.remove('profile-edit_opened');
 }
+
+// ###### helper functions ########
+function addLocation({ name: locationName, link: locationImageLink }) {
+  const locationElement = locationTemplate.cloneNode(true);
+
+  locationElement.querySelector('.location__name').textContent = locationName;
+  locationElement.querySelector('.location__image').style.backgroundImage = `url(${locationImageLink})`;
+  locationElement.querySelector('.location__delete-btn').addEventListener('click', handleDeleteLocation);
+  locationElement.querySelector('.location__like-btn').addEventListener('click', handleLikeLocation);
+  locationsCollection.append(locationElement);
+}
+
 
 // add initial locations to the DOM
 initialLocations.forEach(addLocation);
