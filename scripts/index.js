@@ -49,9 +49,7 @@ function handleEditProfile() {
 
 function handleDeleteLocation(evt) {
   const eventTarget = evt.target;
-  eventTarget.closest('.location')
-    .classList
-    .add('location_inactive');
+  eventTarget.closest('.location').remove();
 }
 
 function handleLikeLocation(evt) {
