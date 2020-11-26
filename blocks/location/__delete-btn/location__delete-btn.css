@@ -4,6 +4,10 @@
   padding: 0;
   border: none;
 
+  position: absolute;
+  top: 20px;
+  right: 17px;
+
   background-image: url(../../../images/location-delete-icon.svg);
   background-position: center;
   background-size: cover;

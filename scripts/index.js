@@ -80,7 +80,7 @@ function addLocation({ name: locationName, link: locationImageLink }) {
   const locationElement = locationTemplate.cloneNode(true);
 
   locationElement.querySelector('.location__name').textContent = locationName;
-  locationElement.querySelector('.location__image').style.backgroundImage = `url(${locationImageLink})`;
+  locationElement.querySelector('.location__image').src = locationImageLink;
   locationElement.querySelector('.location__delete-btn').addEventListener('click', handleDeleteLocation);
   locationElement.querySelector('.location__like-btn').addEventListener('click', handleLikeLocation);
   locationsCollection.append(locationElement);
