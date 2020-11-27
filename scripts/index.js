@@ -27,29 +27,29 @@ const locationTemplate = document.querySelector('#location').content;
 const initialLocations = [
   {
     name: "Yosemite Valley",
-    link: "./images/location-yosemite-valley.jpg"
+    link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
   },
   {
     name: "Lake Louise",
-    link: "./images/location-lake-louise.jpg"
+    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
   },
   {
     name: "Bald Mountains",
-    link: "./images/location-bald-mountains.jpg"
+    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
   },
   {
     name: "Latemar",
-    link: "./images/location-latemar.jpg"
+    link: "https://code.s3.yandex.net/web-code/latemar.jpg"
   },
   {
     name: "Vanoise National Park",
-    link: "./images/location-vanoise-national-park.jpg"
+    link: "https://code.s3.yandex.net/web-code/vanoise.jpg"
   },
   {
     name: "Lago di Braies",
-    link: "./images/location-lago-di-braies.jpg"
+    link: "https://code.s3.yandex.net/web-code/lago.jpg"
   }
-];
+]; 
 
 
 // ####### defining event handlers #######
