@@ -38,7 +38,7 @@
     <template id="location">
       <li class="location">
         <button type="button" aria-label="Delete" class="location__delete-btn"></button>
-        <img src="#" alt="Title for location" class="location__image">
+        <img src="#" alt="" class="location__image">
         <div class="location__content-wrapper">
           <h2 class="location__name"></h2>
           <button type="button" aria-label="Like" class="location__like-btn"></button>  
@@ -123,6 +123,21 @@
             Create
           </button>
         </form>
+      </div>
+    </div>
+
+    <div class="overlay overlay_dark">
+      <div class="overlay__wrapper">
+        <button
+          type="button"
+          aria-label="Close"
+          class="overlay__close-btn overlay__close-btn_type_image-popup"
+        >
+        </button>
+        <figure class="image-popup">
+          <img src="./images/location-lake-louise.jpg" alt="" class="image-popup__image">
+          <figcaption class="image-popup__title"></figcaption>
+        </figure>
       </div>
     </div>
   </div>

@@ -3,6 +3,7 @@
 @import url(./__close-btn/overlay__close-btn.css);
 @import url(./__close-btn/_type/overlay__close-btn_type_location-create.css);
 @import url(./__close-btn/_type/overlay__close-btn_type_profile-edit.css);
+@import url(./__close-btn/_type/overlay__close-btn_type_image-popup.css);
 
 .overlay {
   position: fixed;
