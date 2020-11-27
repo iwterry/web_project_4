@@ -1,4 +1,4 @@
-// ########### defining variable #########
+// ########### defining DOM variables #########
 const closeButtons = document.querySelectorAll('.overlay__close-btn');
 
 const locationPopupImage = document.querySelector('.image-popup__image');
@@ -15,7 +15,6 @@ const locationCreationTitle = locationCreationForm
   .querySelector('.web-project-four-form__input_type_location-title');
 const locationCreationImageLink = locationCreationForm
   .querySelector('.web-project-four-form__input_type_location-image-link');
-
 
 const profileName = document.querySelector('.profile__name');
 const profileSelfDescription = document.querySelector('.profile__self-description');
@@ -142,7 +141,7 @@ function handleSelectImage(evt) {
   locationPopupImage.alt = locationImage.alt;
   locationPopupImageTitle.textContent = locationImage.alt;
 
-  locationPopupImage.closest('.overlay').classList.add('overlay_opened');
+  openOverlay(locationPopupImage);
 }
 
 // ######### adding locations and handlers #######
