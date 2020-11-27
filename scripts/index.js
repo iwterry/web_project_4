@@ -145,7 +145,7 @@ function handleSelectImage(evt) {
   locationPopupImage.closest('.overlay').classList.add('overlay_opened');
 }
 
-// ######### adding locations and handlers
+// ######### adding locations and handlers #######
 // ------ add initial locations to the DOM
 initialLocations.forEach(addLocation);
 
