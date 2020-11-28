@@ -65,6 +65,15 @@ function handleSaveProfile(evt) {
   hidePopup(profileEditForm);
 }
 
+// ------ helpers dealing with popup image
+function showCardImageWithPopup(cardImageLink, cardImageAlt) {
+  cardPopupImage.src = cardImageLink;
+  cardPopupImage.alt = cardImageAlt;
+  cardPopupImageTitle.textContent = cardImageAlt;
+
+  showPopup(cardPopupImage);
+}
+
 // -------- handlers / helpers dealing with card
 function addCardToDom(cardElement) {
   cardsCollection.prepend(cardElement);
@@ -106,20 +115,12 @@ function getNewCardElement({ name: cardName, link: cardImageLink }) {
   
   cardElement.querySelector('.location__delete-btn').addEventListener('click', handleDeleteCard);
   cardElement.querySelector('.location__like-btn').addEventListener('click', handleLikeCard);
-  cardImage.addEventListener('click', handleSelectImage);
+  cardImage.addEventListener('click', function(evt) {
+    const cardImage = evt.target;
+    showCardImageWithPopup(cardImage.src, cardImage.alt);
+  });
 
   return cardElement;
-}
-
-// ------ handlers dealing with selecting popup image
-function handleSelectImage(evt) {
-  const cardImage = evt.target;
-
-  cardPopupImage.src = cardImage.src;
-  cardPopupImage.alt = cardImage.alt;
-  cardPopupImageTitle.textContent = cardImage.alt;
-
-  showPopup(cardPopupImage);
 }
 
 
