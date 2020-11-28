@@ -58,17 +58,17 @@ function getOverlay(childOfOrIsAnOverlay) {
   return childOfOrIsAnOverlay.closest('.overlay');
 }
 
-function closeOverlay(childOfOrIsAnOverlay) {
+function hidePopup(childOfOrIsAnOverlay) {
   getOverlay(childOfOrIsAnOverlay).classList.remove('overlay_opened');
  }
  
- function openOverlay(childOfOrIsAnOverlay) {
+ function showPopup(childOfOrIsAnOverlay) {
    getOverlay(childOfOrIsAnOverlay).classList.add('overlay_opened');
  }
 
-function handleCloseOverlay(evt) {
+function handleHidePopup(evt) {
   const overlayCloseButton = evt.target;
-  closeOverlay(overlayCloseButton);
+  hidePopup(overlayCloseButton);
 }
 
 // ------ handlers dealing with editing profile
@@ -78,7 +78,7 @@ function handleEditProfile() {
   profileEditAboutMeInput.value = profileSelfDescription.textContent;
   
   // show the form
-  openOverlay(profileEditForm);
+  showPopup(profileEditForm);
 }
 
 function handleSaveProfile(evt) {
@@ -89,12 +89,12 @@ function handleSaveProfile(evt) {
   profileSelfDescription.textContent = profileEditAboutMeInput.value;
 
   // hide the form
-  closeOverlay(profileEditForm);
+  hidePopup(profileEditForm);
 }
 
 // -------- handlers / helpers dealing with location
 function handleAddLocation() {
-  openOverlay(locationCreationForm);
+  showPopup(locationCreationForm);
 }
 
 function handleSaveLocation(evt) {
@@ -105,7 +105,7 @@ function handleSaveLocation(evt) {
     link: locationCreationImageLink.value
   });
 
-  closeOverlay(locationCreationForm);
+  hidePopup(locationCreationForm);
 }
 
 function handleDeleteLocation(evt) {
@@ -141,7 +141,7 @@ function handleSelectImage(evt) {
   locationPopupImage.alt = locationImage.alt;
   locationPopupImageTitle.textContent = locationImage.alt;
 
-  openOverlay(locationPopupImage);
+  showPopup(locationPopupImage);
 }
 
 // ######### adding locations and handlers #######
@@ -153,4 +153,4 @@ editButton.addEventListener('click', handleEditProfile);
 profileEditForm.addEventListener('submit', handleSaveProfile);
 addButton.addEventListener('click', handleAddLocation);
 locationCreationForm.addEventListener('submit', handleSaveLocation);
-closeButtons.forEach((closeButton) => closeButton.addEventListener('click', handleCloseOverlay));
+closeButtons.forEach((closeButton) => closeButton.addEventListener('click', handleHidePopup));
