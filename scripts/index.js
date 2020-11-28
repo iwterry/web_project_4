@@ -93,6 +93,10 @@ function handleSaveProfile(evt) {
 }
 
 // -------- handlers / helpers dealing with card
+function addCardToDom(cardElement) {
+  cardsCollection.prepend(cardElement);
+}
+
 function handleAddCard() {
   showPopup(cardCreationForm);
 }
@@ -100,11 +104,12 @@ function handleAddCard() {
 function handleSaveCard(evt) {
   evt.preventDefault();
 
-  addCard({
+  const newCardElement = getNewCardElement({
     name: cardCreationTitle.value,
     link: cardCreationImageLink.value
   });
 
+  addCardToDom(newCardElement);
   hidePopup(cardCreationForm);
 }
 
@@ -118,7 +123,7 @@ function handleLikeCard(evt) {
   eventTarget.classList.toggle('location__like-btn_active');
 }
 
-function addCard({ name: cardName, link: cardImageLink }) {
+function getNewCardElement({ name: cardName, link: cardImageLink }) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardImage = cardElement.querySelector('.location__image');
 
@@ -130,7 +135,7 @@ function addCard({ name: cardName, link: cardImageLink }) {
   cardElement.querySelector('.location__like-btn').addEventListener('click', handleLikeCard);
   cardElement.querySelector('.location__image').addEventListener('click', handleSelectImage);
 
-  cardsCollection.prepend(cardElement);
+  return cardElement;
 }
 
 // ------ handlers dealing with selecting popup image
@@ -146,7 +151,7 @@ function handleSelectImage(evt) {
 
 // ######### adding cards and handlers #######
 // ------ add initial cards to the DOM
-initialCards.forEach(addCard);
+initialCards.forEach((cardObj) => addCardToDom(getNewCardElement(cardObj)));
 
 //---- adding event handlers
 editButton.addEventListener('click', handleEditProfile);
