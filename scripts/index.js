@@ -127,13 +127,13 @@ function getNewCardElement({ name: cardName, link: cardImageLink }) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardImage = cardElement.querySelector('.location__image');
 
+  cardElement.querySelector('.location__name').textContent = cardName;
   cardImage.src = cardImageLink;
   cardImage.alt = cardName;
-  cardElement.querySelector('.location__name').textContent = cardName;
-
+  
   cardElement.querySelector('.location__delete-btn').addEventListener('click', handleDeleteCard);
   cardElement.querySelector('.location__like-btn').addEventListener('click', handleLikeCard);
-  cardElement.querySelector('.location__image').addEventListener('click', handleSelectImage);
+  cardImage.addEventListener('click', handleSelectImage);
 
   return cardElement;
 }
