@@ -1,8 +1,8 @@
 // ########### defining DOM variables #########
 const closeButtons = document.querySelectorAll('.overlay__close-btn');
 
-const locationPopupImage = document.querySelector('.image-popup__image');
-const locationPopupImageTitle = document.querySelector('.image-popup__title');
+const cardPopupImage = document.querySelector('.image-popup__image');
+const cardPopupImageTitle = document.querySelector('.image-popup__title');
 
 const profileEditForm = document.querySelector('.web-project-four-form_type_profile-edit');
 const profileEditNameInput = profileEditForm
@@ -10,10 +10,10 @@ const profileEditNameInput = profileEditForm
 const profileEditAboutMeInput = profileEditForm
   .querySelector('.web-project-four-form__input_type_profile-about-me');
 
-const locationCreationForm = document.querySelector('.web-project-four-form_type_location-create');
-const locationCreationTitle = locationCreationForm
+const cardCreationForm = document.querySelector('.web-project-four-form_type_location-create');
+const cardCreationTitle = cardCreationForm
   .querySelector('.web-project-four-form__input_type_location-title');
-const locationCreationImageLink = locationCreationForm
+const cardCreationImageLink = cardCreationForm
   .querySelector('.web-project-four-form__input_type_location-image-link');
 
 const profileName = document.querySelector('.profile__name');
@@ -21,10 +21,10 @@ const profileSelfDescription = document.querySelector('.profile__self-descriptio
 const editButton = document.querySelector('.profile__edit-btn');
 const addButton = document.querySelector('.profile__add-btn');
 
-const locationsCollection = document.querySelector('.locations__collection');
-const locationTemplate = document.querySelector('#location').content;
+const cardsCollection = document.querySelector('.locations__collection');
+const cardTemplate = document.querySelector('#location').content;
 
-const initialLocations = [
+const initialCards = [
   {
     name: "Yosemite Valley",
     link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
@@ -92,65 +92,65 @@ function handleSaveProfile(evt) {
   hidePopup(profileEditForm);
 }
 
-// -------- handlers / helpers dealing with location
-function handleAddLocation() {
-  showPopup(locationCreationForm);
+// -------- handlers / helpers dealing with card
+function handleAddCard() {
+  showPopup(cardCreationForm);
 }
 
-function handleSaveLocation(evt) {
+function handleSaveCard(evt) {
   evt.preventDefault();
 
-  addLocation({
-    name: locationCreationTitle.value,
-    link: locationCreationImageLink.value
+  addCard({
+    name: cardCreationTitle.value,
+    link: cardCreationImageLink.value
   });
 
-  hidePopup(locationCreationForm);
+  hidePopup(cardCreationForm);
 }
 
-function handleDeleteLocation(evt) {
+function handleDeleteCard(evt) {
   const eventTarget = evt.target;
   eventTarget.closest('.location').remove();
 }
 
-function handleLikeLocation(evt) {
+function handleLikeCard(evt) {
   const eventTarget = evt.target;
   eventTarget.classList.toggle('location__like-btn_active');
 }
 
-function addLocation({ name: locationName, link: locationImageLink }) {
-  const locationElement = locationTemplate.cloneNode(true);
-  const locationImage = locationElement.querySelector('.location__image');
+function addCard({ name: cardName, link: cardImageLink }) {
+  const cardElement = cardTemplate.cloneNode(true);
+  const cardImage = cardElement.querySelector('.location__image');
 
-  locationImage.src = locationImageLink;
-  locationImage.alt = locationName;
-  locationElement.querySelector('.location__name').textContent = locationName;
+  cardImage.src = cardImageLink;
+  cardImage.alt = cardName;
+  cardElement.querySelector('.location__name').textContent = cardName;
 
-  locationElement.querySelector('.location__delete-btn').addEventListener('click', handleDeleteLocation);
-  locationElement.querySelector('.location__like-btn').addEventListener('click', handleLikeLocation);
-  locationElement.querySelector('.location__image').addEventListener('click', handleSelectImage);
+  cardElement.querySelector('.location__delete-btn').addEventListener('click', handleDeleteCard);
+  cardElement.querySelector('.location__like-btn').addEventListener('click', handleLikeCard);
+  cardElement.querySelector('.location__image').addEventListener('click', handleSelectImage);
 
-  locationsCollection.prepend(locationElement);
+  cardsCollection.prepend(cardElement);
 }
 
 // ------ handlers dealing with selecting popup image
 function handleSelectImage(evt) {
-  const locationImage = evt.target;
+  const cardImage = evt.target;
 
-  locationPopupImage.src = locationImage.src;
-  locationPopupImage.alt = locationImage.alt;
-  locationPopupImageTitle.textContent = locationImage.alt;
+  cardPopupImage.src = cardImage.src;
+  cardPopupImage.alt = cardImage.alt;
+  cardPopupImageTitle.textContent = cardImage.alt;
 
-  showPopup(locationPopupImage);
+  showPopup(cardPopupImage);
 }
 
-// ######### adding locations and handlers #######
-// ------ add initial locations to the DOM
-initialLocations.forEach(addLocation);
+// ######### adding cards and handlers #######
+// ------ add initial cards to the DOM
+initialCards.forEach(addCard);
 
 //---- adding event handlers
 editButton.addEventListener('click', handleEditProfile);
 profileEditForm.addEventListener('submit', handleSaveProfile);
-addButton.addEventListener('click', handleAddLocation);
-locationCreationForm.addEventListener('submit', handleSaveLocation);
+addButton.addEventListener('click', handleAddCard);
+cardCreationForm.addEventListener('submit', handleSaveCard);
 closeButtons.forEach((closeButton) => closeButton.addEventListener('click', handleHidePopup));
