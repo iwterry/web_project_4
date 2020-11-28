@@ -1,8 +1,10 @@
-// ########### defining DOM variables #########
+// ########### defining DOM element variables #########
 const closeButtons = document.querySelectorAll('.overlay__close-btn');
 
-const cardPopupImage = document.querySelector('.image-popup__image');
-const cardPopupImageTitle = document.querySelector('.image-popup__title');
+const profileName = document.querySelector('.profile__name');
+const profileSelfDescription = document.querySelector('.profile__self-description');
+const editButton = document.querySelector('.profile__edit-btn');
+const addButton = document.querySelector('.profile__add-btn');
 
 const profileEditForm = document.querySelector('.web-project-four-form_type_profile-edit');
 const profileEditNameInput = profileEditForm
@@ -10,38 +12,45 @@ const profileEditNameInput = profileEditForm
 const profileEditAboutMeInput = profileEditForm
   .querySelector('.web-project-four-form__input_type_profile-about-me');
 
+const cardPopupImage = document.querySelector('.image-popup__image');
+const cardPopupImageTitle = document.querySelector('.image-popup__title');
+
 const cardCreationForm = document.querySelector('.web-project-four-form_type_location-create');
 const cardCreationTitle = cardCreationForm
   .querySelector('.web-project-four-form__input_type_location-title');
 const cardCreationImageLink = cardCreationForm
   .querySelector('.web-project-four-form__input_type_location-image-link');
 
-const profileName = document.querySelector('.profile__name');
-const profileSelfDescription = document.querySelector('.profile__self-description');
-const editButton = document.querySelector('.profile__edit-btn');
-const addButton = document.querySelector('.profile__add-btn');
-
 const cardsCollection = document.querySelector('.locations__collection');
 const cardTemplate = document.querySelector('#location').content;
 
 
 // ####### defining event handlers #######
-// ------ handlers / helpers dealing with overlay
+// ------ handlers / helpers dealing with overlay / popup
 function getOverlay(childOfOrIsAnOverlay) {
   return childOfOrIsAnOverlay.closest('.overlay');
 }
 
 function hidePopup(childOfOrIsAnOverlay) {
   getOverlay(childOfOrIsAnOverlay).classList.remove('overlay_opened');
- }
+}
  
- function showPopup(childOfOrIsAnOverlay) {
-   getOverlay(childOfOrIsAnOverlay).classList.add('overlay_opened');
- }
+function showPopup(childOfOrIsAnOverlay) {
+  getOverlay(childOfOrIsAnOverlay).classList.add('overlay_opened');
+}
 
 function handleHidePopup(evt) {
   const overlayCloseButton = evt.target;
   hidePopup(overlayCloseButton);
+}
+
+// ------ helpers dealing with popup image
+function showCardImageWithPopup(cardImageLink, cardImageAlt) {
+  cardPopupImage.src = cardImageLink;
+  cardPopupImage.alt = cardImageAlt;
+  cardPopupImageTitle.textContent = cardImageAlt;
+
+  showPopup(cardPopupImage);
 }
 
 // ------ handlers dealing with editing profile
@@ -63,15 +72,6 @@ function handleSaveProfile(evt) {
 
   // hide the form
   hidePopup(profileEditForm);
-}
-
-// ------ helpers dealing with popup image
-function showCardImageWithPopup(cardImageLink, cardImageAlt) {
-  cardPopupImage.src = cardImageLink;
-  cardPopupImage.alt = cardImageAlt;
-  cardPopupImageTitle.textContent = cardImageAlt;
-
-  showPopup(cardPopupImage);
 }
 
 // -------- handlers / helpers dealing with card
