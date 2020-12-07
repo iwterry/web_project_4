@@ -60,7 +60,7 @@ function enableValidation(cssClassesAndSelectorsObj) {
       inputElement.addEventListener('input', function handleInputValidation() {
         checkInputValidity(inputElement, inputErrorClass, errorMsgVisibilityClass);
         toggleButtonState(inputElements, submitBtnElement, disabledButtonClass);
-      });
+      });      
     });
   });
 }
