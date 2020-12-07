@@ -1,4 +1,5 @@
 // ########### defining DOM element variables #########
+const overlays = document.querySelectorAll('.overlay');
 const closeButtons = document.querySelectorAll('.overlay__close-btn');
 
 const profileName = document.querySelector('.profile__name');
@@ -34,9 +35,24 @@ function getOverlay(childOfOrIsAnOverlay) {
 function hidePopup(childOfOrIsAnOverlay) {
   getOverlay(childOfOrIsAnOverlay).classList.remove('overlay_opened');
 }
+
+function hidePopupByClickingOnOverlay(targetOfClick, overlay) {
+  if(targetOfClick === overlay) {
+    hidePopup(overlay);
+  }
+}
  
 function showPopup(childOfOrIsAnOverlay) {
-  getOverlay(childOfOrIsAnOverlay).classList.add('overlay_opened');
+  const overlay = getOverlay(childOfOrIsAnOverlay);
+  overlay.classList.add('overlay_opened');
+
+  document.addEventListener('keydown', function handleHidePopupThroughEscapeKey(evt) {
+    if(evt.key === 'Escape') {
+      hidePopup(overlay);
+      document.removeEventListener('keydown', handleHidePopupThroughEscapeKey);
+    };
+  });
+
 }
 
 function handleHidePopup(evt) {
@@ -123,14 +139,16 @@ function getNewCardElement({ name: cardName, link: cardImageLink }) {
   return cardElement;
 }
 
-
 // ######### adding cards and handlers #######
 // ------ add initial cards to the DOM
 initialCardObjs.forEach((cardObj) => addCardToDom(getNewCardElement(cardObj)));
 
 //---- adding event handlers
 editButton.addEventListener('click', handleEditProfile);
-//profileEditForm.addEventListener('submit', handleSaveProfile);
 addButton.addEventListener('click', handleAddCard);
-//cardCreationForm.addEventListener('submit', handleSaveCard);
 closeButtons.forEach((closeButton) => closeButton.addEventListener('click', handleHidePopup));
+overlays.forEach((overlay) => overlay.addEventListener(
+  'click', 
+  (evt) => hidePopupByClickingOnOverlay(evt.target, overlay)
+));
+
