@@ -51,16 +51,10 @@ function enableValidation(cssClassesAndSelectorsObj) {
     errorMsgVisibilityClass
   } = cssClassesAndSelectorsObj;
   const formElements = Array.from(document.querySelectorAll(formSelector));
-  const formSubmitEventHandlers = {
-    profileEditForm: handleSaveProfile,
-    locationCreateForm: handleSaveCard,
-  };
 
   formElements.forEach(function(formElement) {
     const submitBtnElement = formElement.elements.submitBtn;
     const inputElements = Array.from(formElement.querySelectorAll(inputSelector)); 
-   
-    formElement.addEventListener('submit', formSubmitEventHandlers[formElement.name]);
 
     inputElements.forEach(function(inputElement) {
       inputElement.addEventListener('input', function handleInputValidation() {

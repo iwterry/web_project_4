@@ -7,20 +7,16 @@ const profileSelfDescription = document.querySelector('.profile__self-descriptio
 const editButton = document.querySelector('.profile__edit-btn');
 const addButton = document.querySelector('.profile__add-btn');
 
-const profileEditForm = document.querySelector('.project-form_type_profile-edit');
-const profileEditNameInput = profileEditForm
-  .querySelector('#profile-name-input');
-const profileEditAboutMeInput = profileEditForm
-  .querySelector('#profile-about-me-input');
+const profileEditForm = document.forms.profileEditForm;
+const profileEditNameInput = profileEditForm.elements.profileName;
+const profileEditAboutMeInput = profileEditForm.elements.aboutMe;
 
 const cardPopupImage = document.querySelector('.image-popup__image');
 const cardPopupImageTitle = document.querySelector('.image-popup__title');
 
-const cardCreationForm = document.querySelector('.project-form_type_location-create');
-const cardCreationTitleInput = cardCreationForm
-  .querySelector('#location-title-input');
-const cardCreationImageLinkInput = cardCreationForm
-  .querySelector('#location-image-link-input');
+const cardCreationForm = document.forms.locationCreateForm;
+const cardCreationTitleInput = cardCreationForm.elements.locationTitle;
+const cardCreationImageLinkInput = cardCreationForm.elements.imageLink;
 
 const cardsCollection = document.querySelector('.locations__collection');
 const cardTemplate = document.querySelector('#location').content;
@@ -70,7 +66,7 @@ function showCardImageWithPopup(cardImageLink, cardImageAlt) {
 }
 
 // ------ handlers dealing with editing profile
-function handleEditProfile() {
+function handleShowProfileEditForm() {
   // fill in input values with the given text content of the profile
   profileEditNameInput.value = profileName.textContent;
   profileEditAboutMeInput.value = profileSelfDescription.textContent;
@@ -95,7 +91,7 @@ function addCardToDom(cardElement) {
   cardsCollection.prepend(cardElement);
 }
 
-function handleAddCard() {
+function handleShowCardCreationForm() {
   showPopup(cardCreationForm);
 }
 
@@ -144,11 +140,12 @@ function getNewCardElement({ name: cardName, link: cardImageLink }) {
 initialCardObjs.forEach((cardObj) => addCardToDom(getNewCardElement(cardObj)));
 
 //---- adding event handlers
-editButton.addEventListener('click', handleEditProfile);
-addButton.addEventListener('click', handleAddCard);
+editButton.addEventListener('click', handleShowProfileEditForm);
+addButton.addEventListener('click', handleShowCardCreationForm);
 closeButtons.forEach((closeButton) => closeButton.addEventListener('click', handleHidePopup));
+profileEditForm.addEventListener('submit', handleSaveProfile);
+cardCreationForm.addEventListener('submit', handleSaveCard);
 overlays.forEach((overlay) => overlay.addEventListener(
   'click', 
   (evt) => hidePopupByClickingOnOverlay(evt.target, overlay)
 ));
-
