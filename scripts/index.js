@@ -30,6 +30,16 @@ function getOverlay(childOfOrIsAnOverlay) {
 
 function hidePopup(childOfOrIsAnOverlay) {
   getOverlay(childOfOrIsAnOverlay).classList.remove('overlay_opened');
+  document.removeEventListener('keydown', handleHidePopupThroughEscapeKey);
+}
+
+function handleHidePopupThroughEscapeKey(evt) {
+  if(evt.key === 'Escape') {
+    const openedOverlay = document.querySelector('.overlay_opened');
+    if(openedOverlay !== null) {
+      hidePopup(openedOverlay);
+    }  
+  }
 }
 
 function hidePopupByClickingOnOverlay(targetOfClick, overlay) {
@@ -42,13 +52,7 @@ function showPopup(childOfOrIsAnOverlay) {
   const overlay = getOverlay(childOfOrIsAnOverlay);
   overlay.classList.add('overlay_opened');
 
-  document.addEventListener('keydown', function handleHidePopupThroughEscapeKey(evt) {
-    if(evt.key === 'Escape') {
-      hidePopup(overlay);
-      document.removeEventListener('keydown', handleHidePopupThroughEscapeKey);
-    };
-  });
-
+  document.addEventListener('keydown', handleHidePopupThroughEscapeKey);
 }
 
 function handleHidePopup(evt) {
