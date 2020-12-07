@@ -10,7 +10,7 @@
 @import url(../blocks/overlay/overlay.css);
 @import url(../blocks/overlay/_opened/overlay_opened.css);
 @import url(../blocks/overlay/_dark/overlay_dark.css);
-@import url(../blocks/web-project-four-form/web-project-four-form.css);
-@import url(../blocks/web-project-four-form/_type/web-project-four-form_type_location-create.css);
-@import url(../blocks/web-project-four-form/_type/web-project-four-form_type_profile-edit.css);
+@import url(../blocks/project-form/project-form.css);
+@import url(../blocks/project-form/_type/project-form_type_location-create.css);
+@import url(../blocks/project-form/_type/project-form_type_profile-edit.css);
 @import url(../blocks/image-popup/image-popup.css);

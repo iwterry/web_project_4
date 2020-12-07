@@ -6,20 +6,20 @@ const profileSelfDescription = document.querySelector('.profile__self-descriptio
 const editButton = document.querySelector('.profile__edit-btn');
 const addButton = document.querySelector('.profile__add-btn');
 
-const profileEditForm = document.querySelector('.web-project-four-form_type_profile-edit');
+const profileEditForm = document.querySelector('.project-form_type_profile-edit');
 const profileEditNameInput = profileEditForm
-  .querySelector('.web-project-four-form__input_type_profile-name');
+  .querySelector('#profile-name-input');
 const profileEditAboutMeInput = profileEditForm
-  .querySelector('.web-project-four-form__input_type_profile-about-me');
+  .querySelector('#profile-about-me-input');
 
 const cardPopupImage = document.querySelector('.image-popup__image');
 const cardPopupImageTitle = document.querySelector('.image-popup__title');
 
-const cardCreationForm = document.querySelector('.web-project-four-form_type_location-create');
-const cardCreationTitle = cardCreationForm
-  .querySelector('.web-project-four-form__input_type_location-title');
-const cardCreationImageLink = cardCreationForm
-  .querySelector('.web-project-four-form__input_type_location-image-link');
+const cardCreationForm = document.querySelector('.project-form_type_location-create');
+const cardCreationTitleInput = cardCreationForm
+  .querySelector('#location-title-input');
+const cardCreationImageLinkInput = cardCreationForm
+  .querySelector('#location-image-link-input');
 
 const cardsCollection = document.querySelector('.locations__collection');
 const cardTemplate = document.querySelector('#location').content;
@@ -87,8 +87,8 @@ function handleSaveCard(evt) {
   evt.preventDefault();
 
   const newCardElement = getNewCardElement({
-    name: cardCreationTitle.value,
-    link: cardCreationImageLink.value
+    name: cardCreationTitleInput.value,
+    link: cardCreationImageLinkInput.value
   });
 
   addCardToDom(newCardElement);
@@ -130,7 +130,7 @@ initialCardObjs.forEach((cardObj) => addCardToDom(getNewCardElement(cardObj)));
 
 //---- adding event handlers
 editButton.addEventListener('click', handleEditProfile);
-profileEditForm.addEventListener('submit', handleSaveProfile);
+//profileEditForm.addEventListener('submit', handleSaveProfile);
 addButton.addEventListener('click', handleAddCard);
-cardCreationForm.addEventListener('submit', handleSaveCard);
+//cardCreationForm.addEventListener('submit', handleSaveCard);
 closeButtons.forEach((closeButton) => closeButton.addEventListener('click', handleHidePopup));

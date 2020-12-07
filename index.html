@@ -57,31 +57,49 @@
         <form
           method="post"
           action="#"
-          name="profile_edit_form" 
-          class="web-project-four-form web-project-four-form_type_profile-edit"
+          name="profileEditForm" 
+          class="project-form project-form_type_profile-edit"
+          novalidate
         >
-          <h3 class="web-project-four-form__title web-project-four-form__title_type_profile-edit">
+          <h3 class="project-form__title project-form__title_type_profile-edit">
             Edit profile
           </h3>
-          <input 
-            type="text"
-            aria-label="Name"
-            name="name"
-            class="web-project-four-form__input web-project-four-form__input_type_profile-name"
-            placeholder="Name"
-            required
-          >
-          <input
-            type="text"
-            aria-label="About me"
-            name="about_me"
-            class="web-project-four-form__input web-project-four-form__input_type_profile-about-me"
-            placeholder="About me"
-            required
-          >
+          <!-- 
+            Note: I am not using <label> element to wrap <input> because
+              there are no labels being used for inputs.
+          -->
+          <div class="project-form__field-wrapper project-form__field-wrapper_form_profile-edit">
+            <input 
+              type="text"
+              aria-label="Name"
+              name="profileName"
+              id="profile-name-input"
+              class="project-form__input project-form__input_type_profile-edit-field"
+              placeholder="Name"
+              minlength="2"
+              maxlength="40"
+              required
+            >
+            <p class="project-form__input-error project-form__input-error_field_profile-name-input"></p>
+          </div>
+          <div class="project-form__field-wrapper project-form__field-wrapper_form_profile-edit">
+            <input
+              type="text"
+              aria-label="About me"
+              name="aboutMe"
+              id="profile-about-me-input"
+              class="project-form__input project-form__input_type_profile-edit-field"
+              placeholder="About me"
+              minlength="2"
+              maxlength="200"
+              required
+            >
+            <p class="project-form__input-error project-form__input-error_field_profile-about-me-input"></p>
+          </div>
           <button
             type="submit" 
-            class="web-project-four-form__submit-btn web-project-four-form__submit-btn_type_profile-edit"
+            class="project-form__submit-btn project-form__submit-btn_type_profile-edit"
+            name="submitBtn"
           >
             Save
           </button>
@@ -99,30 +117,44 @@
         <form
           method="post"
           action="#"
-          name="location_create_form"
-          class="web-project-four-form web-project-four-form_type_location-create">
-          <h3 class="web-project-four-form__title web-project-four-form__title_type_location-create">
+          name="locationCreateForm"
+          class="project-form project-form_type_location-create"
+          novalidate
+        >
+          <h3 class="project-form__title project-form__title_type_location-create">
             New place
           </h3>
-          <input 
-            type="text"
-            aria-label="Title"
-            name="title"
-            class="web-project-four-form__input web-project-four-form__input_type_location-title"
-            placeholder="Title"
-            required
-          >
-          <input
-            type="url"
-            aria-label="Image link"
-            name="image_link"
-            class="web-project-four-form__input web-project-four-form__input_type_location-image-link"
-            placeholder="Image link"
-            required
-          >
+          <div class="project-form__field-wrapper project-form__field-wrapper_form_location-create">
+            <input 
+              type="text"
+              aria-label="Title"
+              name="locationTitle"
+              id="location-title-input"
+              class="project-form__input project-form__input_type_location-create-field"
+              placeholder="Title"
+              minlength="2"
+              maxlength="30"
+              required
+            >
+            <p class="project-form__input-error project-form__input-error_field_location-title-input"></p>
+          </div>
+          <div class="project-form__field-wrapper project-form__field-wrapper_form_location-create">
+            <input
+              type="url"
+              aria-label="Image link"
+              name="imageLink"
+              id="location-image-link-input"
+              class="project-form__input project-form__input_type_location-create-field"
+              placeholder="Image link"
+              required
+            >
+            <p class="project-form__input-error project-form__input-error_field_location-image-link-input"></p>
+          </div>
           <button
             type="submit"
-            class="web-project-four-form__submit-btn web-project-four-form__submit-btn_type_location-create"
+            class="project-form__submit-btn project-form__submit-btn_type_location-create project-form__submit-btn_disabled"
+            name="submitBtn"
+            disabled
           >
             Create
           </button>
@@ -147,5 +179,6 @@
   </div>
   <script src="scripts/initial-data.js"></script>
   <script src="scripts/index.js"></script>
+  <script src="scripts/validate.js"></script>
 </body>
 </html>

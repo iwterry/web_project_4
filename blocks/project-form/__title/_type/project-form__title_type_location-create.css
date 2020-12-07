@@ -1,0 +1,15 @@
+@media screen and (max-width: 1023px) { 
+  .project-form__title_type_location-create {
+    max-width: 185px;
+    margin-left: 20px;
+    margin-bottom: 36px;
+
+    align-self: flex-start;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .project-form__title_type_location-create {
+    margin-bottom: 54px;
+  }
+}

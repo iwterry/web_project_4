@@ -1,7 +1,6 @@
 @media screen and (max-width: 1023px) {
-  .web-project-four-form__submit-btn_type_profile-edit {
+  .project-form__submit-btn_type_profile-edit {
     width: 238px;
     padding: 14px 0;
-    margin-top: 45px;
   }
 }

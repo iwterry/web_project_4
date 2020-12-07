@@ -1,4 +1,4 @@
-.web-project-four-form__title {
+.project-form__title {
   width: 100%;
   margin: 0;
 
@@ -8,7 +8,7 @@
 }
 
 @media screen and (min-width: 1024px) {
-  .web-project-four-form__title {
+  .project-form__title {
     max-width: 330px;
     margin-left: 36px;
     align-self: flex-start;
