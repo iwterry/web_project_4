@@ -25,6 +25,7 @@ by the user.
 * Using HTML templates to enhance readability and security rather than using things like
  innerHTML and document.createElement
 * Using JavaScript functions to reduce repeatablity and enhance readability 
+* Form validation using HTML and JavaScript
 * Compressing images
 * Deploy using GitHub Pages
 
@@ -32,4 +33,5 @@ by the user.
 
 * [Link to the project 4 specification on Figma](https://www.figma.com/file/mUgu8OSHWE0M6p6vfwmdu9/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1) 
 * [Link to the project 5 specification on Figma](https://www.figma.com/file/avLHzpJw2dmU2NaDATZ6CX/Sprint-5%3A-Around-The-U.S.-%2F-desktop-%2B-mobile?node-id=0%3A1)
+* [Link to the project 6 specification on Figma](https://www.figma.com/file/KUbYgXnYElfzxCbcrlsOCE/Sprint-6%3A-Around-The-U.S.?node-id=0%3A1)
 * [Link to my implementation on GitHub Pages](https://iwterry.github.io/web_project_4/index.html)
