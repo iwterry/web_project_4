@@ -26,6 +26,8 @@ by the user.
  innerHTML and document.createElement
 * Using JavaScript functions to reduce repeatablity and enhance readability 
 * Form validation using HTML and JavaScript
+* Object-oriented programming using JavaScript classes 
+* ES6 modules for importing and exporting
 * Compressing images
 * Deploy using GitHub Pages
 
