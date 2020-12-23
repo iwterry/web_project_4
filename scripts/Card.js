@@ -1,4 +1,4 @@
-import Popup from './Popup.js';
+import { showPopup } from './popup-util.js';
 
 export default class Card {
   constructor(cardDataObj, cardTemplateSelector) {
@@ -33,13 +33,12 @@ export default class Card {
   _handleShowingCardImageAsPopup() {
     const cardPopupImage = document.querySelector('.image-popup__image');
     const cardPopupImageTitle = document.querySelector('.image-popup__title');
-    const popup = new Popup(cardPopupImage);
 
     cardPopupImage.src = this._imageLink;
     cardPopupImage.alt = this._title;
     cardPopupImageTitle.textContent = this._title;
     
-    popup.show();
+    showPopup(cardPopupImage);
   }
   
   _handleDeletingCard(evt) {
