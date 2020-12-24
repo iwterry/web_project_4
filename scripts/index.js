@@ -1,108 +1,123 @@
-import Popup from './Popup.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import { initialCardObjs } from './initial-data.js';
+import { 
+  showPopup, 
+  hidePopup, 
+  hidePopupByClickingOnOverlay, 
+  handleHidePopup, 
+  showCardImageWithPopup
+} from './popup-util.js';
 
-// wrapping code in an IIFE to minimize global variables
-(function main() {
-  // ------- defining DOM element variables -------
-  const profileName = document.querySelector('.profile__name');
-  const profileSelfDescription = document.querySelector('.profile__self-description');
-  const editButton = document.querySelector('.profile__edit-btn');
-  const addButton = document.querySelector('.profile__add-btn');
+// ########### defining DOM element variables #########
+const overlays = document.querySelectorAll('.overlay');
+const closeButtons = document.querySelectorAll('.overlay__close-btn');
 
-  const profileEditForm = document.forms.profileEditForm;
-  const profileEditNameInput = profileEditForm.elements.profileName;
-  const profileEditAboutMeInput = profileEditForm.elements.aboutMe;
+const profileName = document.querySelector('.profile__name');
+const profileSelfDescription = document.querySelector('.profile__self-description');
+const editButton = document.querySelector('.profile__edit-btn');
+const addButton = document.querySelector('.profile__add-btn');
 
-  const cardCreationForm = document.forms.locationCreateForm;
-  const cardCreationTitleInput = cardCreationForm.elements.locationTitle;
-  const cardCreationImageLinkInput = cardCreationForm.elements.imageLink;
+const profileEditForm = document.forms.profileEditForm;
+const profileEditNameInput = profileEditForm.elements.profileName;
+const profileEditAboutMeInput = profileEditForm.elements.aboutMe;
 
-  const cardsCollection = document.querySelector('.locations__collection');
-  const formElements = document.querySelectorAll('.project-form');
+const cardCreationForm = document.forms.locationCreateForm;
+const cardCreationTitleInput = cardCreationForm.elements.locationTitle;
+const cardCreationImageLinkInput = cardCreationForm.elements.imageLink;
 
-  // ------ handlers dealing with editing profile
-  function handleShowProfileEditForm() {
-    // fill in input values with the given text content of the profile
-    profileEditNameInput.value = profileName.textContent;
-    profileEditAboutMeInput.value = profileSelfDescription.textContent;
-    
-    // show the form
-    const popup = new Popup(profileEditForm);
-    popup.show();
-  }
+const cardsCollection = document.querySelector('.locations__collection');
+const formElements = document.querySelectorAll('.project-form');
 
-  function handleSaveProfile(evt) {
-    evt.preventDefault();
+// ####### defining event handlers ######
+// ------ handlers dealing with editing profile
+function handleShowProfileEditForm() {
+  // fill in input values with the given text content of the profile
+  profileEditNameInput.value = profileName.textContent;
+  profileEditAboutMeInput.value = profileSelfDescription.textContent;
+  
+  // show the form
+  showPopup(profileEditForm);
+}
 
-    // fill in profile information from user input
-    profileName.textContent = profileEditNameInput.value;
-    profileSelfDescription.textContent = profileEditAboutMeInput.value;
+function handleSaveProfile(evt) {
+  evt.preventDefault();
 
-    // hide the form
-    const popup = new Popup(profileEditForm);
-    popup.hide();
-  }
+  // fill in profile information from user input
+  profileName.textContent = profileEditNameInput.value;
+  profileSelfDescription.textContent = profileEditAboutMeInput.value;
 
-  // -------- handlers / helpers dealing with card
-  function addCardToDom(cardElement) {
-    cardsCollection.prepend(cardElement);
-  }
+  // hide the form
+  hidePopup(profileEditForm);
+}
 
-  function handleShowCardCreationForm() {
-    const popup = new Popup(cardCreationForm);
-    popup.show();
-  }
+// -------- handlers / helpers dealing with card
+function getNewCardElement(cardDataObj) {
+  const cardTemplateSelector = '#location';
+  const newCard = new Card(cardDataObj, cardTemplateSelector, showCardImageWithPopup);
 
-  function handleSaveCard(evt) {
-    evt.preventDefault();
+  return newCard.generateNewCardElement();
+}
 
-    const newCard = new Card({
-      name: cardCreationTitleInput.value,
-      link: cardCreationImageLinkInput.value
-    }, '#location');
+function addCardToDom(cardElement) {
+  cardsCollection.prepend(cardElement);
+}
 
-    addCardToDom(newCard.generateNewCardElement());
+function handleShowCardCreationForm() {
+  showPopup(cardCreationForm);
+}
 
-    const popup = new Popup(cardCreationForm);
-    popup.hide();
-  }
+function handleSaveCard(evt) {
+  evt.preventDefault();
+
+  const newCardElement = getNewCardElement({
+    name: cardCreationTitleInput.value,
+    link: cardCreationImageLinkInput.value
+  });
+
+  addCardToDom(newCardElement);
+  hidePopup(cardCreationForm);
+}
 
   // ------ adding data for cards, events listeners dealing with forms, and form validation --------
-  function addInitialCardsToDom() {
-    initialCardObjs.forEach(function(cardDataObj) {
-      const card = new Card(cardDataObj, '#location');
-      addCardToDom(card.generateNewCardElement());
-    });
-  }
+function addInitialCardsToDom() {
+  initialCardObjs.forEach(function (cardDataObj) {
+    const newCardElement = getNewCardElement(cardDataObj);
+    addCardToDom(newCardElement);
+  });
+}
 
-  function addInitialEventListeners() {
-    // for buttons to show form
-    editButton.addEventListener('click', handleShowProfileEditForm);
-    addButton.addEventListener('click', handleShowCardCreationForm);
-    // for forms
-    profileEditForm.addEventListener('submit', handleSaveProfile);
-    cardCreationForm.addEventListener('submit', handleSaveCard);
-  }
+function addInitialEventListeners() {
+  // for buttons to show form
+  editButton.addEventListener('click', handleShowProfileEditForm);
+  addButton.addEventListener('click', handleShowCardCreationForm);
+  // for forms
+  profileEditForm.addEventListener('submit', handleSaveProfile);
+  cardCreationForm.addEventListener('submit', handleSaveCard);
+  // for popup closing functionality
+  closeButtons.forEach((closeButton) => closeButton.addEventListener('click', handleHidePopup));
+  overlays.forEach((overlay) => overlay.addEventListener(
+    'click', 
+    (evt) => hidePopupByClickingOnOverlay(evt.target, overlay)
+  ));
+}
 
-  function addFormValidation() {
-    const settingsObj = {
-      inputSelector: '.project-form__input',
-      inputErrorMsgSelectorPrefix: '.project-form__input-error_field_',
-      submitBtnSelector: '.project-form__submit-btn',
-      disabledButtonClass: 'project-form__submit-btn_disabled',
-      inputErrorClass: 'project-form__input_type_error',
-      errorMsgVisibilityClass: 'project-form__input-error_active',
-    };
-    
-    formElements.forEach(function(formElement) {
-      const formValidator = new FormValidator(settingsObj, formElement);
-      formValidator.enableValidation();
-    });
-  }
+function addFormValidation() {
+  const settingsObj = {
+    inputSelector: '.project-form__input',
+    inputErrorMsgSelectorPrefix: '.project-form__input-error_field_',
+    submitBtnSelector: '.project-form__submit-btn',
+    disabledButtonClass: 'project-form__submit-btn_disabled',
+    inputErrorClass: 'project-form__input_type_error',
+    errorMsgVisibilityClass: 'project-form__input-error_active',
+  };
 
-  addInitialCardsToDom();
-  addInitialEventListeners();
-  addFormValidation();
-})();
+  formElements.forEach(function (formElement) {
+    const formValidator = new FormValidator(settingsObj, formElement);
+    formValidator.enableValidation();
+  });
+}
+
+addInitialCardsToDom();
+addInitialEventListeners();
+addFormValidation();

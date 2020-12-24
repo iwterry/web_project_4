@@ -1,3 +1,6 @@
+const cardPopupImage = document.querySelector('.image-popup__image');
+const cardPopupImageTitle = document.querySelector('.image-popup__title');
+
 export function getOverlay(childOfOrIsAnOverlay) {
   return childOfOrIsAnOverlay.closest('.overlay');
 }
@@ -32,4 +35,12 @@ export function showPopup(childOfOrIsAnOverlay) {
 export function handleHidePopup(evt) {
   const overlayCloseButton = evt.target;
   hidePopup(overlayCloseButton);
+}
+
+export function showCardImageWithPopup(cardImageLink, cardImageAlt) {
+  cardPopupImage.src = cardImageLink;
+  cardPopupImage.alt = cardImageAlt;
+  cardPopupImageTitle.textContent = cardImageAlt;
+
+  showPopup(cardPopupImage);
 }

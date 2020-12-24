@@ -1,11 +1,10 @@
-import { showPopup } from './popup-util.js';
-
 export default class Card {
-  constructor(cardDataObj, cardTemplateSelector) {
+  constructor(cardDataObj, cardTemplateSelector, handleShowingCardImageAsPopup) {
     this._title = cardDataObj.name;
     this._imageLink = cardDataObj.link;
     this._templateSelector = cardTemplateSelector;
     this._element = null;
+    this._handleShowingCardImageAsPopup = handleShowingCardImageAsPopup
   }
 
   _getPlainCardElement() {
@@ -29,17 +28,6 @@ export default class Card {
     
     this._element = cardElement;
   }
-
-  _handleShowingCardImageAsPopup() {
-    const cardPopupImage = document.querySelector('.image-popup__image');
-    const cardPopupImageTitle = document.querySelector('.image-popup__title');
-
-    cardPopupImage.src = this._imageLink;
-    cardPopupImage.alt = this._title;
-    cardPopupImageTitle.textContent = this._title;
-    
-    showPopup(cardPopupImage);
-  }
   
   _handleDeletingCard(evt) {
     const eventTarget = evt.target;
@@ -58,7 +46,10 @@ export default class Card {
 
     cardDeleteBtnElement.addEventListener('click', this._handleDeletingCard);
     cardLikeBtnElement.addEventListener('click', this._handleLikingCard);
-    cardImageElement.addEventListener('click', () => this._handleShowingCardImageAsPopup());
+    cardImageElement.addEventListener(
+      'click',
+      () => this._handleShowingCardImageAsPopup(this._imageLink, this._title)
+    );
   }
 
   generateNewCardElement() {
