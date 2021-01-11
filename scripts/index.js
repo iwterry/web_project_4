@@ -8,6 +8,7 @@ import {
   handleHidePopup, 
   showCardImageWithPopup
 } from './popup-util.js';
+import Section from './Section.js';
 
 (function main() {
   // ########### defining DOM element variables #########
@@ -27,8 +28,16 @@ import {
   const cardCreationTitleInput = cardCreationForm.elements.locationTitle;
   const cardCreationImageLinkInput = cardCreationForm.elements.imageLink;
 
-  const cardsCollection = document.querySelector('.locations__collection');
+  const cardsCollectionSelector = '.locations__collection';
   const formElements = document.querySelectorAll('.project-form');
+
+  const cardListSection = new Section({ 
+    items: initialCardObjs,
+    renderer: (item) => {
+      const newCardElement = getNewCardElement(item);
+      cardListSection.addItem(newCardElement);
+    }
+  }, cardsCollectionSelector);
 
   // ####### defining event handlers ######
   // ------ handlers dealing with editing profile
@@ -60,10 +69,6 @@ import {
     return newCard.generateNewCardElement();
   }
 
-  function addCardToDom(cardElement) {
-    cardsCollection.prepend(cardElement);
-  }
-
   function handleShowCardCreationForm() {
     showPopup(cardCreationForm);
   }
@@ -76,18 +81,11 @@ import {
       link: cardCreationImageLinkInput.value
     });
 
-    addCardToDom(newCardElement);
+    cardListSection.addItem(newCardElement);
     hidePopup(cardCreationForm);
   }
 
     // ------ adding data for cards, events listeners dealing with forms, and form validation --------
-  function addInitialCardsToDom() {
-    initialCardObjs.forEach(function (cardDataObj) {
-      const newCardElement = getNewCardElement(cardDataObj);
-      addCardToDom(newCardElement);
-    });
-  }
-
   function addInitialEventListeners() {
     // for buttons to show form
     editButton.addEventListener('click', handleShowProfileEditForm);
@@ -119,7 +117,9 @@ import {
     });
   }
 
-  addInitialCardsToDom();
+
+
+  cardListSection.renderItems();
   addInitialEventListeners();
   addFormValidation();
 })();
