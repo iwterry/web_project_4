@@ -1,10 +1,10 @@
 export default class Card {
-  constructor(cardDataObj, cardTemplateSelector, handleShowingCardImageAsPopup) {
+  constructor(cardDataObj, cardTemplateSelector, handleCardClick) {
     this._title = cardDataObj.name;
     this._imageLink = cardDataObj.link;
     this._templateSelector = cardTemplateSelector;
     this._element = null;
-    this._handleShowingCardImageAsPopup = handleShowingCardImageAsPopup
+    this._handleCardClick = handleCardClick
   }
 
   _getPlainCardElement() {
@@ -48,7 +48,7 @@ export default class Card {
     cardLikeBtnElement.addEventListener('click', this._handleLikingCard);
     cardImageElement.addEventListener(
       'click',
-      () => this._handleShowingCardImageAsPopup(this._imageLink, this._title)
+      () => this._handleCardClick(this._imageLink, this._title)
     );
   }
 

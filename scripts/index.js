@@ -1,35 +1,34 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import { initialCardObjs } from './initial-data.js';
-import { 
-  showPopup, 
-  hidePopup, 
-  hidePopupByClickingOnOverlay, 
-  handleHidePopup, 
-  showCardImageWithPopup
-} from './popup-util.js';
 import Section from './Section.js';
+import PopupWithForm from './PopupWithForm.js';
+import PopupWithImage from './PopupWithImage.js';
+import UserInfo from './UserInfo.js';
 
 (function main() {
-  // ########### defining DOM element variables #########
-  const overlays = document.querySelectorAll('.overlay');
-  const closeButtons = document.querySelectorAll('.overlay__close-btn');
+  // ######## defining DOM element variables and CSS selectors / classnames #########
+  const popupSelector = '.overlay';
+  const openedPopupClassName = 'overlay_opened';
+  const clickedToClosePopupSelector = '.overlay__close-btn';
 
-  const profileName = document.querySelector('.profile__name');
-  const profileSelfDescription = document.querySelector('.profile__self-description');
-  const editButton = document.querySelector('.profile__edit-btn');
-  const addButton = document.querySelector('.profile__add-btn');
+  const profileNameSelector = '.profile__name';
+  const profileSelfDescriptionSelector = '.profile__self-description';
+  const editBtnSelector = '.profile__edit-btn';
+  const addBtnSelector = '.profile__add-btn';
+  const editButton = document.querySelector(editBtnSelector);
+  const addButton = document.querySelector(addBtnSelector);
 
-  const profileEditForm = document.forms.profileEditForm;
-  const profileEditNameInput = profileEditForm.elements.profileName;
-  const profileEditAboutMeInput = profileEditForm.elements.aboutMe;
-
-  const cardCreationForm = document.forms.locationCreateForm;
-  const cardCreationTitleInput = cardCreationForm.elements.locationTitle;
-  const cardCreationImageLinkInput = cardCreationForm.elements.imageLink;
+  const profileEditFormSelector = '.project-form_type_profile-edit';
+  const cardCreationFormSelector = '.project-form_type_location-create';
+  const formInputSelector = '.project-form__input';
 
   const cardsCollectionSelector = '.locations__collection';
-  const formElements = document.querySelectorAll('.project-form');
+  const formSelector = '.project-form';
+  const formElements = document.querySelectorAll(formSelector);
+
+  const cardPopupImageSelector = '.image-popup__image';
+  const cardPopupImageTitleSelector= '.image-popup__title';
 
   const cardListSection = new Section({ 
     items: initialCardObjs,
@@ -39,66 +38,101 @@ import Section from './Section.js';
     }
   }, cardsCollectionSelector);
 
+  const popupWithImage = new PopupWithImage(
+    cardPopupImageSelector, {
+      popupSelector,
+      openedPopupClassName,
+      clickedToClosePopupSelector,
+      imageTitleSelector: cardPopupImageTitleSelector
+    }
+  );
+
+  const userInfo = new UserInfo({ 
+    nameOfUserSelector: profileNameSelector,
+    descriptionAboutUserSelector: profileSelfDescriptionSelector
+  });
+
+  const popupWithProfileEditForm = new PopupWithForm(
+    profileEditFormSelector,
+    function handleProfileEditFormSubmit(evt) {
+      evt.preventDefault();
+
+      const { profileName, aboutMe } = popupWithProfileEditForm.getInputValues();
+      
+      userInfo.setUserInfo({
+        name: profileName,
+        description: aboutMe
+      });
+
+      popupWithProfileEditForm.close();
+    }, {
+      popupSelector,
+      openedPopupClassName,
+      clickedToClosePopupSelector,
+      inputSelector: formInputSelector
+    }
+  );
+
+  const popupWithCardCreationForm = new PopupWithForm(
+    cardCreationFormSelector,
+    function handleCardCreationFormSubmit(evt) {
+      evt.preventDefault();
+
+      const { locationTitle, imageLink } = popupWithCardCreationForm.getInputValues();
+
+      const newCardElement = getNewCardElement({
+        name: locationTitle,
+        link: imageLink
+      });
+  
+      cardListSection.addItem(newCardElement);
+      popupWithCardCreationForm.close();
+
+    }, {
+      popupSelector,
+      openedPopupClassName,
+      clickedToClosePopupSelector,
+      inputSelector: formInputSelector
+    }
+  );
+
+
   // ####### defining event handlers ######
   // ------ handlers dealing with editing profile
   function handleShowProfileEditForm() {
-    // fill in input values with the given text content of the profile
-    profileEditNameInput.value = profileName.textContent;
-    profileEditAboutMeInput.value = profileSelfDescription.textContent;
+    const { name, description } = userInfo.getUserInfo(); 
     
-    // show the form
-    showPopup(profileEditForm);
-  }
-
-  function handleSaveProfile(evt) {
-    evt.preventDefault();
-
-    // fill in profile information from user input
-    profileName.textContent = profileEditNameInput.value;
-    profileSelfDescription.textContent = profileEditAboutMeInput.value;
-
-    // hide the form
-    hidePopup(profileEditForm);
+    popupWithProfileEditForm.setInputValues({
+      profileName: name,
+      aboutMe: description
+    });
+    popupWithProfileEditForm.open()
   }
 
   // -------- handlers / helpers dealing with card
-  function getNewCardElement(cardDataObj) {
+  function getNewCardElement({ name, link }) {
     const cardTemplateSelector = '#location';
-    const newCard = new Card(cardDataObj, cardTemplateSelector, showCardImageWithPopup);
+
+    const newCard = new Card(
+       { name, link },
+      cardTemplateSelector, 
+      () => popupWithImage.open(link, name)
+    );
 
     return newCard.generateNewCardElement();
   }
 
   function handleShowCardCreationForm() {
-    showPopup(cardCreationForm);
-  }
-
-  function handleSaveCard(evt) {
-    evt.preventDefault();
-
-    const newCardElement = getNewCardElement({
-      name: cardCreationTitleInput.value,
-      link: cardCreationImageLinkInput.value
-    });
-
-    cardListSection.addItem(newCardElement);
-    hidePopup(cardCreationForm);
+    popupWithCardCreationForm.open();
   }
 
     // ------ adding data for cards, events listeners dealing with forms, and form validation --------
   function addInitialEventListeners() {
-    // for buttons to show form
     editButton.addEventListener('click', handleShowProfileEditForm);
     addButton.addEventListener('click', handleShowCardCreationForm);
-    // for forms
-    profileEditForm.addEventListener('submit', handleSaveProfile);
-    cardCreationForm.addEventListener('submit', handleSaveCard);
-    // for popup closing functionality
-    closeButtons.forEach((closeButton) => closeButton.addEventListener('click', handleHidePopup));
-    overlays.forEach((overlay) => overlay.addEventListener(
-      'click', 
-      (evt) => hidePopupByClickingOnOverlay(evt.target, overlay)
-    ));
+    popupWithImage.setEventListeners();
+    popupWithCardCreationForm.setEventListeners();
+    popupWithProfileEditForm.setEventListeners()
   }
 
   function addFormValidation() {
@@ -116,8 +150,6 @@ import Section from './Section.js';
       formValidator.enableValidation();
     });
   }
-
-
 
   cardListSection.renderItems();
   addInitialEventListeners();
