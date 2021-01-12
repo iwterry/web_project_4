@@ -30,6 +30,10 @@ by the user.
 * ES6 modules for importing and exporting
 * Compressing images
 * Deploy using GitHub Pages
+* Use Webpack 
+  * to compress and bundle CSS and JS files,
+  * to add CSS vendor prefixes, and
+  * to make JS code more compatible with older browsers.
 
 **Links**
 
