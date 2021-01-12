@@ -1,8 +1,8 @@
 {
   "name": "web_project_4",
   "version": "1.0.0",
-  "description": "* Description of the project and its functionality\r * Description of technologies and techniques used.\r * Links",
-  "main": "index.js",
+  "description": "",
+  "main": "src/index.js",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack serve"
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/iwterry/web_project_4.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Isaac Terry",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/iwterry/web_project_4/issues"
