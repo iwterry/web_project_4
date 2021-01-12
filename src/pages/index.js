@@ -23,6 +23,8 @@ import {
   settingsObj
 } from '../utils/constants.js';
 
+import './index.css';
+
 (function main() {
 
   // ########## creating objects ###########
