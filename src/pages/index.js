@@ -98,7 +98,7 @@ import './index.css';
 
 
   // ####### setting event listeners ######
-  editBtnElement.addEventListener('click', function handleShowProfileEditForm() {
+  editBtnElement.addEventListener('click', () => {
     const { name, description } = userInfo.getUserInfo(); 
     
     popupWithProfileEditForm.setInputValues({
@@ -108,9 +108,7 @@ import './index.css';
     popupWithProfileEditForm.open()
   });
 
-  addBtnElement.addEventListener('click',   function handleShowCardCreationForm() {
-    popupWithCardCreationForm.open();
-  });
+  addBtnElement.addEventListener('click', () => popupWithCardCreationForm.open());
 
   popupWithImage.setEventListeners();
   popupWithCardCreationForm.setEventListeners();
