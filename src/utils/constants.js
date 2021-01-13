@@ -31,8 +31,8 @@ export const profileSelfDescriptionSelector = '.profile__self-description';
 export const editBtnElement = document.querySelector('.profile__edit-btn');
 export const addBtnElement = document.querySelector('.profile__add-btn');
 
-export const profileEditFormSelector = '.project-form_type_profile-edit';
-export const cardCreationFormSelector = '.project-form_type_location-create';
+export const nameOfProfileEditForm = 'profileEditForm';
+export const nameOfCardCreationForm = 'locationCreateForm';
 export const formInputSelector = '.project-form__input';
 
 export const cardTemplateSelector = '#location';

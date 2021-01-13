@@ -9,8 +9,8 @@ import {
   initialCardObjs,
   profileNameSelector,
   profileSelfDescriptionSelector,
-  profileEditFormSelector,
-  cardCreationFormSelector,
+  nameOfProfileEditForm,
+  nameOfCardCreationForm,
   formInputSelector,
   formElements,
   cardPopupImageSelector,
@@ -53,7 +53,7 @@ import './index.css';
   });
 
   const popupWithProfileEditForm = new PopupWithForm(
-    profileEditFormSelector,
+    nameOfProfileEditForm,
     function handleProfileEditFormSubmit(evt) {
       evt.preventDefault();
 
@@ -72,7 +72,7 @@ import './index.css';
   );
 
   const popupWithCardCreationForm = new PopupWithForm(
-    cardCreationFormSelector,
+    nameOfCardCreationForm,
     function handleCardCreationFormSubmit(evt) {
       evt.preventDefault();
 
