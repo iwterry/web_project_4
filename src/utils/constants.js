@@ -37,7 +37,6 @@ export const formInputSelector = '.project-form__input';
 
 export const cardTemplateSelector = '#location';
 export const cardsCollectionSelector = '.locations__collection';
-export const formElements = document.querySelectorAll('.project-form');
 
 export const cardPopupImageSelector = '.image-popup__image';
 export const cardPopupImageTitleSelector= '.image-popup__title';

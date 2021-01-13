@@ -12,7 +12,6 @@ import {
   nameOfProfileEditForm,
   nameOfCardCreationForm,
   formInputSelector,
-  formElements,
   cardPopupImageSelector,
   cardPopupImageTitleSelector,
   cardsCollectionSelector,
@@ -52,20 +51,39 @@ import './index.css';
     descriptionAboutUserSelector: profileSelfDescriptionSelector
   });
 
+  const profileEditFormValidator = new FormValidator(
+    settingsObj,
+    document.forms[nameOfProfileEditForm]
+  );
+
+  const cardCreationFormValidator = new FormValidator(
+    settingsObj,
+    document.forms[nameOfCardCreationForm]
+  );
+    
+  
   const popupWithProfileEditForm = new PopupWithForm(
     nameOfProfileEditForm,
-    function handleProfileEditFormSubmit(evt) {
-      evt.preventDefault();
+    {
+      handleFormSubmit: (evt) => {
+        evt.preventDefault();
 
-      const { profileName, aboutMe } = popupWithProfileEditForm.getInputValues();
-      
-      userInfo.setUserInfo({
-        name: profileName,
-        description: aboutMe
-      });
+        if(profileEditFormValidator.validateAllInputs()) return;
 
-      popupWithProfileEditForm.close();
-    }, {
+        const { profileName, aboutMe } = popupWithProfileEditForm.getInputValues();
+        
+        userInfo.setUserInfo({
+          name: profileName,
+          description: aboutMe
+        });
+
+        popupWithProfileEditForm.close();
+      },
+      peformActionPriorToFormOpening: () => {
+        profileEditFormValidator.showNoErrors();
+      }
+    }, 
+    {
       ...popupCssObj,
       inputSelector: formInputSelector
     }
@@ -73,23 +91,34 @@ import './index.css';
 
   const popupWithCardCreationForm = new PopupWithForm(
     nameOfCardCreationForm,
-    function handleCardCreationFormSubmit(evt) {
-      evt.preventDefault();
+    {
+      handleFormSubmit: (evt) => {
+        evt.preventDefault();
 
-      const { locationTitle, imageLink } = popupWithCardCreationForm.getInputValues();
+        if(cardCreationFormValidator.validateAllInputs()) return;
+        /*
+          Because the form is reset before it completely fades,
+          users are able to submit the form with invalid input;
+          This guard clause prevents this from occurring.
+        */
 
-      const newCardElement = getNewCardElement(
-        {
-          name: locationTitle,
-          link: imageLink
-        }, 
-        popupWithImage,
-        cardTemplateSelector
-      );
-  
-      cardListSection.addItem(newCardElement);
-      popupWithCardCreationForm.close();
+        const { locationTitle, imageLink } = popupWithCardCreationForm.getInputValues();
 
+        const newCardElement = getNewCardElement(
+          {
+            name: locationTitle,
+            link: imageLink
+          }, 
+          popupWithImage,
+          cardTemplateSelector
+        );
+    
+        cardListSection.addItem(newCardElement);
+        popupWithCardCreationForm.close();
+      },
+      peformActionPriorToFormOpening: () => {
+        cardCreationFormValidator.showNoErrors(true);
+      }
     }, {
       ...popupCssObj,
       inputSelector: formInputSelector
@@ -116,10 +145,8 @@ import './index.css';
 
 
   // ####### adding form validation #########
-  formElements.forEach(function (formElement) {
-    const formValidator = new FormValidator(settingsObj, formElement);
-    formValidator.enableValidation();
-  }); 
+  profileEditFormValidator.enableValidation();
+  cardCreationFormValidator.enableValidation();
   
 
   // ######## displaying initial cards ##########
