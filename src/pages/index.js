@@ -40,6 +40,28 @@ import './index.css';
       else return Promise.reject(res.status);
     });
   }
+
+  const userApiEndpoint = 'https://around.nomoreparties.co/v1/group-8/users/me';
+  const cardsApiEndpoint = 'https://around.nomoreparties.co/v1/group-8/cards';
+
+  function fetchData({url, method='GET', additionalHeaderProps={}, body=null}) {
+    const init = {
+      method,
+      headers: {
+        authorization: 'f9c51bc0-ecec-42b1-bdb4-bcfabdba3e4f',
+        ...additionalHeaderProps
+      }
+    };
+
+    if(body !== null) {
+      init.body = body;
+    }
+
+    return fetch(url, init).then((res) => {
+      if(res.ok) return res.json();
+      else return Promise.reject(res.status);
+    });
+  }
   
   function getCardListSection(items, popupWithImage) {
     return new Section({ 
@@ -65,7 +87,7 @@ import './index.css';
 
   let cardListSection = getCardListSection([], popupWithImage);
   
-  getCards()
+  fetchData({ url: cardsApiEndpoint })
     .then((cardsFromApi) => {
       const cards = cardsFromApi.map(({ name, link }) => { name, link });
       cardListSection = getCardListSection(cards, popupWithImage);
@@ -98,13 +120,26 @@ import './index.css';
         if(profileEditFormValidator.validateAllInputs()) return;
 
         const { profileName, aboutMe } = popupWithProfileEditForm.getInputValues();
-        
-        userInfo.setUserInfo({
-          name: profileName,
-          description: aboutMe
-        });
 
-        popupWithProfileEditForm.close();
+        fetchData({
+          url: userApiEndpoint,
+          method: 'PATCH',
+          additionalHeaderProps: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: profileName,
+            about: aboutMe
+          })
+        })
+          .then(({ name, about }) => {
+            userInfo.setUserInfo({
+              name,
+              description: about
+            });
+          })
+          .catch((err) => console.log(`Error: ${err}`))
+          .finally(() => popupWithProfileEditForm.close());
       },
       peformActionPriorToFormOpening: () => {
         profileEditFormValidator.showNoErrors();
@@ -131,17 +166,28 @@ import './index.css';
 
         const { locationTitle, imageLink } = popupWithCardCreationForm.getInputValues();
 
-        const newCardElement = getNewCardElement(
-          {
+        fetchData({
+          url: cardsApiEndpoint,
+          method: 'POST',
+          additionalHeaderProps: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
             name: locationTitle,
             link: imageLink
-          }, 
-          popupWithImage,
-          cardTemplateSelector
-        );
-    
-        cardListSection.addItem(newCardElement);
-        popupWithCardCreationForm.close();
+          })
+        })
+          .then(({ name, link }) => {
+            const newCardElement = getNewCardElement(
+              { name, link }, 
+              popupWithImage,
+              cardTemplateSelector
+            );
+        
+            cardListSection.addItem(newCardElement);
+          })
+          .catch((err) => console.log(`Error: ${err}`))
+          .finally(() => popupWithCardCreationForm.close());
       },
       peformActionPriorToFormOpening: () => {
         cardCreationFormValidator.showNoErrors(true);
@@ -176,23 +222,7 @@ import './index.css';
   cardCreationFormValidator.enableValidation();
   
 
-  // ######## displaying initial cards ##########
-  //cardListSection.renderItems();
 
-  function getUser() {
-    return fetch(
-      'https://around.nomoreparties.co/v1/group-8/users/me',
-        {
-            method: 'GET',
-            headers: {
-              authorization: 'f9c51bc0-ecec-42b1-bdb4-bcfabdba3e4f'
-            }
-        }
-    ).then((res) => {
-      if(res.ok) return res.json();
-      else return Promise.reject(res.status);
-    });
-  }
 
   function addUserToDom(user) {
     const { name, about, avatar } = user;
@@ -203,7 +233,7 @@ import './index.css';
     profileAvatarElement.src = avatar;
   }
 
-  getUser()
+  fetchData({ url: userApiEndpoint })
     .then(addUserToDom)
     .catch((err) => console.log(`Error: ${err}`));
 
