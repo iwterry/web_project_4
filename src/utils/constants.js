@@ -28,6 +28,7 @@
 
 export const profileNameSelector = '.profile__name';
 export const profileSelfDescriptionSelector = '.profile__self-description';
+export const profileAvatarElement = document.querySelector('.profile__avatar');
 export const editBtnElement = document.querySelector('.profile__edit-btn');
 export const addBtnElement = document.querySelector('.profile__add-btn');
 

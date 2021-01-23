@@ -19,12 +19,41 @@ import {
   addBtnElement,
   editBtnElement,
   popupCssObj,
-  settingsObj
+  settingsObj,
+  profileAvatarElement
 } from '../utils/constants.js';
 
 import './index.css';
 
 (function main() {
+  function getCards() {
+    return fetch(
+      'https://around.nomoreparties.co/v1/group-8/cards',
+        {
+            method: 'GET',
+            headers: {
+              authorization: 'f9c51bc0-ecec-42b1-bdb4-bcfabdba3e4f'
+            }
+        }
+    ).then((res) => {
+      if(res.ok) return res.json();
+      else return Promise.reject(res.status);
+    });
+  }
+  
+  function getCardListSection(items, popupWithImage) {
+    return new Section({ 
+      items: items,
+      renderer: (item) => {
+        const newCardElement = getNewCardElement(
+          item,
+          popupWithImage,
+          cardTemplateSelector
+        );
+        cardListSection.addItem(newCardElement);
+      }
+    }, cardsCollectionSelector);
+  }
 
   // ########## creating objects ###########
   const popupWithImage = new PopupWithImage(
@@ -34,17 +63,15 @@ import './index.css';
     }
   );
 
-  const cardListSection = new Section({ 
-    items: initialCardObjs,
-    renderer: (item) => {
-      const newCardElement = getNewCardElement(
-        item,
-        popupWithImage,
-        cardTemplateSelector
-      );
-      cardListSection.addItem(newCardElement);
-    }
-  }, cardsCollectionSelector);
+  let cardListSection = getCardListSection([], popupWithImage);
+  
+  getCards()
+    .then((cardsFromApi) => {
+      const cards = cardsFromApi.map(({ name, link }) => { name, link });
+      cardListSection = getCardListSection(cards, popupWithImage);
+      cardListSection.renderItems();
+    })
+    .catch((err) => console.log(`Error: ${err}`));
 
   const userInfo = new UserInfo({ 
     nameOfUserSelector: profileNameSelector,
@@ -150,5 +177,37 @@ import './index.css';
   
 
   // ######## displaying initial cards ##########
-  cardListSection.renderItems();
+  //cardListSection.renderItems();
+
+  function getUser() {
+    return fetch(
+      'https://around.nomoreparties.co/v1/group-8/users/me',
+        {
+            method: 'GET',
+            headers: {
+              authorization: 'f9c51bc0-ecec-42b1-bdb4-bcfabdba3e4f'
+            }
+        }
+    ).then((res) => {
+      if(res.ok) return res.json();
+      else return Promise.reject(res.status);
+    });
+  }
+
+  function addUserToDom(user) {
+    const { name, about, avatar } = user;
+    userInfo.setUserInfo({
+      name: name,
+      description: about,
+    });
+    profileAvatarElement.src = avatar;
+  }
+
+  getUser()
+    .then(addUserToDom)
+    .catch((err) => console.log(`Error: ${err}`));
+
 })();
+
+
+
