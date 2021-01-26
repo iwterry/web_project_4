@@ -28,31 +28,42 @@
 
 export const profileNameSelector = '.profile__name';
 export const profileSelfDescriptionSelector = '.profile__self-description';
-export const profileAvatarElement = document.querySelector('.profile__avatar');
+export const profileAvatarSelector = '.profile__avatar';
+export const profileAvatarOverlaySelector = '.profile__avatar-overlay';
 export const editBtnElement = document.querySelector('.profile__edit-btn');
 export const addBtnElement = document.querySelector('.profile__add-btn');
 
 export const nameOfProfileEditForm = 'profileEditForm';
 export const nameOfCardCreationForm = 'locationCreateForm';
+export const nameOfConfirmationPromptForm = 'confirmationPromptForm';
+export const nameOfProfileImgChangeForm = 'profileImgChangeForm';
 export const formInputSelector = '.project-form__input';
 
 export const cardTemplateSelector = '#location';
 export const cardsCollectionSelector = '.locations__collection';
 
 export const cardPopupImageSelector = '.image-popup__image';
-export const cardPopupImageTitleSelector= '.image-popup__title';
+export const cardPopupImageTitleSelector = '.image-popup__title';
+
+export const submitBtnTextWhileProcessing = 'Saving...';
+
+// not meant to be exported at this time; only saved to reduce duplication
+const submitBtnSelector = '.project-form__submit-btn';
+const disabledSubmitBtnClassName = 'project-form__submit-btn_disabled';
 
 export const popupCssObj = {
   popupSelector: '.overlay',
   openedPopupClassName: 'overlay_opened',
-  clickedToClosePopupSelector: '.overlay__close-btn'
+  clickedToClosePopupSelector: '.overlay__close-btn',
+  submitBtnSelector,
+  disabledSubmitBtnClassName
 }
 
 export const settingsObj = {
   inputSelector: formInputSelector,
   inputErrorMsgSelectorPrefix: '.project-form__input-error_field_',
-  submitBtnSelector: '.project-form__submit-btn',
-  disabledButtonClass: 'project-form__submit-btn_disabled',
+  submitBtnSelector,
+  disabledButtonClass: disabledSubmitBtnClassName,
   inputErrorClass: 'project-form__input_type_error',
   errorMsgVisibilityClass: 'project-form__input-error_active',
 };

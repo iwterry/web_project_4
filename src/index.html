@@ -195,6 +195,7 @@
           <h3 class="project-form__title project-form__title_type_confirmation-prompt">
             Are you sure?
           </h3>
+          <input type="hidden" name="id" class="project-form__input project-form__input_hidden">
           <button type="submit" class="project-form__submit-btn project-form__submit-btn_type_confirmation-prompt">
             Yes
           </button>
@@ -210,18 +211,18 @@
           class="overlay__close-btn overlay__close-btn_type_image-popup"
         >
         </button>
-        <form name="profileImgChangeForm" class="project-form project-form_type_profile-img-change"> 
+        <form name="profileImgChangeForm" class="project-form project-form_type_profile-img-change" novalidate> 
           <h3 class="project-form__title project-form__title_type_profile-img-change">
             Change profile picture
           </h3>
           <div class="project-form__field-wrapper project-form__field-wrapper_form_profile-img-change">
             <input
               type="url"
-              aria-label="Image link"
-              name="imageLink"
+              aria-label="Avatar link"
+              name="avatarLink"
               id="profile-image-link-input"
               class="project-form__input project-form__input_type_profile-img-change-field"
-              placeholder="Image link"
+              placeholder="Avatar link"
               required
             >
             <p class="project-form__input-error project-form__input-error_field_profile-image-link-input"></p>

@@ -1,3 +1,4 @@
+import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
@@ -6,7 +7,6 @@ import UserInfo from '../components/UserInfo.js';
 import { getNewCardElement } from '../utils/helpers.js';
 
 import { 
-  initialCardObjs,
   profileNameSelector,
   profileSelfDescriptionSelector,
   nameOfProfileEditForm,
@@ -20,29 +20,20 @@ import {
   editBtnElement,
   popupCssObj,
   settingsObj,
-  profileAvatarElement
+  profileAvatarSelector,
+  profileAvatarOverlaySelector,
+  nameOfConfirmationPromptForm,
+  nameOfProfileImgChangeForm,
+  submitBtnTextWhileProcessing
 } from '../utils/constants.js';
 
 import './index.css';
 
 (function main() {
-  function getCards() {
-    return fetch(
-      'https://around.nomoreparties.co/v1/group-8/cards',
-        {
-            method: 'GET',
-            headers: {
-              authorization: 'f9c51bc0-ecec-42b1-bdb4-bcfabdba3e4f'
-            }
-        }
-    ).then((res) => {
-      if(res.ok) return res.json();
-      else return Promise.reject(res.status);
-    });
-  }
-
   const userApiEndpoint = 'https://around.nomoreparties.co/v1/group-8/users/me';
   const cardsApiEndpoint = 'https://around.nomoreparties.co/v1/group-8/cards';
+  const cardLikesApiEndpointBase = 'https://around.nomoreparties.co/v1/group-8/cards/likes';
+  const userAvatarApiEndpoint = 'https://around.nomoreparties.co/v1/group-8/users/me/avatar';
 
   function fetchData({url, method='GET', additionalHeaderProps={}, body=null}) {
     const init = {
@@ -66,16 +57,35 @@ import './index.css';
   function getCardListSection(items, popupWithImage) {
     return new Section({ 
       items: items,
-      renderer: (item) => {
+      renderer: (cardData) => {
         const newCardElement = getNewCardElement(
-          item,
-          popupWithImage,
-          cardTemplateSelector
+          cardData,
+          cardTemplateSelector,
+          {
+            handleCardClick: () => popupWithImage.open(cardData.link, cardData.name),
+            getUpdatedNumLikesFromApiAfterUserAction: handleLikingCard,
+            handleDeleteCard: handleDeletingCard
+          }
         );
         cardListSection.addItem(newCardElement);
       }
     }, cardsCollectionSelector);
   }
+
+  function handleLikingCard(cardId, isLiking) {
+    return fetchData({
+      url: `${cardLikesApiEndpointBase}/${cardId}`,
+      method: isLiking ? 'PUT' : 'DELETE'
+    })
+      .then(({ likes }) => likes.length)
+      .catch((err) => console.log(`Error: ${err}`));
+  }
+
+  function handleDeletingCard(cardId) {
+    popupWithConfirmationPromptForm.setInputValues({id: cardId});
+    popupWithConfirmationPromptForm.open();
+  }
+
 
   // ########## creating objects ###########
   const popupWithImage = new PopupWithImage(
@@ -89,16 +99,34 @@ import './index.css';
   
   fetchData({ url: cardsApiEndpoint })
     .then((cardsFromApi) => {
-      const cards = cardsFromApi.map(({ name, link }) => { name, link });
+      const { id: userId } = userInfo.getUserInfo();
+      const cards = cardsFromApi.map(({ name, link, likes, _id, owner }) => { 
+
+        const isCardLikedByUser = likes.some((someUser) => someUser._id === userId);
+        const isUserTheOwner = owner._id === userId;
+
+        console.log(userId, isCardLikedByUser, likes);
+        console.log(owner);
+        return { 
+          name, 
+          link, 
+          initialNumLikes: likes.length, 
+          id : _id,
+          isLiked: isCardLikedByUser,
+          isOwner: isUserTheOwner
+        };
+      });
       cardListSection = getCardListSection(cards, popupWithImage);
       cardListSection.renderItems();
     })
     .catch((err) => console.log(`Error: ${err}`));
 
-  const userInfo = new UserInfo({ 
+  const userInfo = new UserInfo({
     nameOfUserSelector: profileNameSelector,
-    descriptionAboutUserSelector: profileSelfDescriptionSelector
-  });
+    descriptionAboutUserSelector: profileSelfDescriptionSelector,
+    avatarForUserSelector: profileAvatarSelector,
+    avatarOverlaySelector: profileAvatarOverlaySelector
+  }, () => popupWithProfileImgChangeForm.open());
 
   const profileEditFormValidator = new FormValidator(
     settingsObj,
@@ -109,6 +137,11 @@ import './index.css';
     settingsObj,
     document.forms[nameOfCardCreationForm]
   );
+
+  const profileImgChangeFormValidator = new FormValidator(
+    settingsObj,
+    document.forms[nameOfProfileImgChangeForm]
+  );
     
   
   const popupWithProfileEditForm = new PopupWithForm(
@@ -117,9 +150,12 @@ import './index.css';
       handleFormSubmit: (evt) => {
         evt.preventDefault();
 
-        if(profileEditFormValidator.validateAllInputs()) return;
-
         const { profileName, aboutMe } = popupWithProfileEditForm.getInputValues();
+        const originalText = popupWithProfileEditForm.getSubmitBtnText();
+        // I am saving the button so that I do not need to know what it is in the HTML.
+        // This is to help make it less coupled.
+
+        popupWithProfileEditForm.setSubmitBtnText(submitBtnTextWhileProcessing);
 
         fetchData({
           url: userApiEndpoint,
@@ -139,7 +175,10 @@ import './index.css';
             });
           })
           .catch((err) => console.log(`Error: ${err}`))
-          .finally(() => popupWithProfileEditForm.close());
+          .finally(() => {
+            popupWithProfileEditForm.setSubmitBtnText(originalText);
+            popupWithProfileEditForm.close();
+          });
       },
       peformActionPriorToFormOpening: () => {
         profileEditFormValidator.showNoErrors();
@@ -157,14 +196,10 @@ import './index.css';
       handleFormSubmit: (evt) => {
         evt.preventDefault();
 
-        if(cardCreationFormValidator.validateAllInputs()) return;
-        /*
-          Because the form is reset before it completely fades,
-          users are able to submit the form with invalid input;
-          This guard clause prevents this from occurring.
-        */
-
         const { locationTitle, imageLink } = popupWithCardCreationForm.getInputValues();
+        const orignalText = popupWithCardCreationForm.getSubmitBtnText();
+
+        popupWithCardCreationForm.setSubmitBtnText(submitBtnTextWhileProcessing);
 
         fetchData({
           url: cardsApiEndpoint,
@@ -177,20 +212,92 @@ import './index.css';
             link: imageLink
           })
         })
-          .then(({ name, link }) => {
+          .then(({ name, link, _id }) => {
             const newCardElement = getNewCardElement(
-              { name, link }, 
-              popupWithImage,
-              cardTemplateSelector
+              { 
+                name,
+                link,
+                id: _id
+              }, 
+              cardTemplateSelector,
+              { 
+                handleCardClick: () => popupWithImage.open(link, name),
+                handleDeleteCard: handleDeletingCard,
+                getUpdatedNumLikesFromApiAfterUserAction: handleLikingCard
+
+              }
+              
             );
         
             cardListSection.addItem(newCardElement);
           })
           .catch((err) => console.log(`Error: ${err}`))
-          .finally(() => popupWithCardCreationForm.close());
+          .finally(() => {
+            popupWithCardCreationForm.setSubmitBtnText(orignalText);
+            popupWithCardCreationForm.close();
+          });
       },
       peformActionPriorToFormOpening: () => {
         cardCreationFormValidator.showNoErrors(true);
+      }
+    }, {
+      ...popupCssObj,
+      inputSelector: formInputSelector
+    }
+  );
+
+  const popupWithConfirmationPromptForm = new PopupWithForm(
+    nameOfConfirmationPromptForm,
+    {
+      handleFormSubmit: (evt) => {
+        evt.preventDefault();
+
+        const { id: cardId } = popupWithConfirmationPromptForm.getInputValues();
+
+        fetchData({
+          url: `${cardsApiEndpoint}/${cardId}`,
+          method: 'DELETE'
+        })
+          .then(() => Card.delete(cardId))
+          .catch((err) => console.log(`Error: ${err}`))
+          .finally(() => popupWithConfirmationPromptForm.close());
+      }
+    }, {
+      ...popupCssObj,
+      inputSelector: formInputSelector
+    }
+  );
+
+  const popupWithProfileImgChangeForm = new PopupWithForm(
+    nameOfProfileImgChangeForm,
+    {
+      handleFormSubmit: (evt) => {
+        evt.preventDefault();
+
+        const { avatarLink } = popupWithProfileImgChangeForm.getInputValues();
+
+        const originalText = popupWithProfileImgChangeForm.getSubmitBtnText();
+        popupWithProfileImgChangeForm.setSubmitBtnText('Saving...');
+
+        fetchData({
+          url: userAvatarApiEndpoint,
+          method: 'PATCH',
+          additionalHeaderProps: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            avatar: avatarLink
+          })
+        })
+          .then(({ avatar }) => userInfo.setUserInfo({ avatarLink: avatar }))
+          .catch((err) => console.log( `Error: ${err}`))
+          .finally(() => {
+            popupWithProfileImgChangeForm.setSubmitBtnText(originalText);
+            popupWithProfileImgChangeForm.close();
+          });
+      },
+      peformActionPriorToFormOpening: () => {
+        profileImgChangeFormValidator.showNoErrors(true);
       }
     }, {
       ...popupCssObj,
@@ -212,25 +319,29 @@ import './index.css';
 
   addBtnElement.addEventListener('click', () => popupWithCardCreationForm.open());
 
+  userInfo.setEventListeners();
+
   popupWithImage.setEventListeners();
   popupWithCardCreationForm.setEventListeners();
   popupWithProfileEditForm.setEventListeners();
-
+  popupWithConfirmationPromptForm.setEventListeners();
+  popupWithProfileImgChangeForm.setEventListeners();
 
   // ####### adding form validation #########
   profileEditFormValidator.enableValidation();
   cardCreationFormValidator.enableValidation();
+  profileImgChangeFormValidator.enableValidation();
   
 
 
 
-  function addUserToDom(user) {
-    const { name, about, avatar } = user;
+  function addUserToDom({ name, about, avatar, _id }) {
     userInfo.setUserInfo({
+      id: _id,
       name: name,
       description: about,
+      avatarLink: avatar
     });
-    profileAvatarElement.src = avatar;
   }
 
   fetchData({ url: userApiEndpoint })

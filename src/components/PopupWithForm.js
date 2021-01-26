@@ -4,7 +4,14 @@ export default class PopupWithForm extends Popup {
   constructor(
     nameOfForm, 
     { handleFormSubmit, peformActionPriorToFormOpening },
-    { popupSelector, openedPopupClassName, clickedToClosePopupSelector, inputSelector }
+    { 
+      popupSelector,
+      openedPopupClassName,
+      clickedToClosePopupSelector,
+      inputSelector,
+      submitBtnSelector, 
+      disabledSubmitBtnClassName 
+    }
   ) {
 
     super(
@@ -20,6 +27,9 @@ export default class PopupWithForm extends Popup {
     */
     this._formElement = document.forms[nameOfForm];
     this._inputElements = Array.from(this._formElement.querySelectorAll(inputSelector));
+    this._submitBtnElement = this._formElement.querySelector(submitBtnSelector)
+    this._disabledSubmitBtnClassName = disabledSubmitBtnClassName;
+
     this._handleFormSubmit = handleFormSubmit;
     this._performActionPriorToFormOpening = peformActionPriorToFormOpening;
   }
@@ -39,6 +49,22 @@ export default class PopupWithForm extends Popup {
     });
   }
 
+  _disableSubmitBtn() {
+    this._submitBtnElement.disabled = true;
+    this._submitBtnElement.classList.add(this._disabledSubmitBtnClassName);
+
+    /* Note: while it is true that this functionality exist in the class for form validations,
+    the purpose is not the same, as this class is not concerned with validating input. */
+  }
+
+  getSubmitBtnText() {
+    return this._submitBtnElement.textContent;
+  }
+
+  setSubmitBtnText(text) {
+    this._submitBtnElement.textContent = text;
+  }
+
   setEventListeners() {
     super.setEventListeners();
     this._formElement.addEventListener('submit', this._handleFormSubmit);
@@ -52,8 +78,11 @@ export default class PopupWithForm extends Popup {
     super.open();
   }
 
+
+
   close() {
     super.close();
+    this._disableSubmitBtn(); // keep form from being able to be submitted as the form closes.
     this._formElement.reset();
   }
 }

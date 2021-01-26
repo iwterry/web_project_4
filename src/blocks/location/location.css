@@ -1,5 +1,6 @@
 @import url(./__image/location__image.css);
 @import url(./__delete-btn/location__delete-btn.css);
+@import url(./__delete-btn/_active/location__delete-btn_active.css);
 @import url(./__content-wrapper/location__content-wrapper.css);
 @import url(./__name/location__name.css);
 @import url(./__likes-wrapper/location__likes-wrapper.css);

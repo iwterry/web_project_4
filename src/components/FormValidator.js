@@ -76,14 +76,6 @@ export default class FormValidator {
     isButtonDisabled ? this._disableButton() : this._enableButton();
   }
 
-  // return true if there are validation errors; otherwise, return false.
-  // true represents that messages had to be displayed;
-  // false represents that no messages had to be displayed
-  validateAllInputs() {
-    this._inputElements.forEach((inputElement) => this._handleInputValidation(inputElement));
-    return this._hasSomeInvalidInput();
-  }
-  
   enableValidation() {
     this._inputElements.forEach((inputElement) => this._addEventListener(inputElement));
   }

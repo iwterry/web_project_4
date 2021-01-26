@@ -8,6 +8,8 @@
   top: 20px;
   right: 17px;
 
+  display: none; /* so that delete button is not shown by default */
+
   background-image: url(../../../../images/location-delete-icon.svg);
   background-position: center;
   background-size: cover;
