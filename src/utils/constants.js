@@ -47,7 +47,7 @@ export const cardPopupImageTitleSelector = '.image-popup__title';
 
 export const submitBtnTextWhileProcessing = 'Saving...';
 
-// not meant to be exported at this time; only saved to reduce duplication
+// not meant to be exported by themselves at this time; only saved to reduce duplication
 const submitBtnSelector = '.project-form__submit-btn';
 const disabledSubmitBtnClassName = 'project-form__submit-btn_disabled';
 
@@ -66,4 +66,15 @@ export const settingsObj = {
   disabledButtonClass: disabledSubmitBtnClassName,
   inputErrorClass: 'project-form__input_type_error',
   errorMsgVisibilityClass: 'project-form__input-error_active',
+};
+
+export const cardCssObj = {
+  cardSelector: '.location',
+  imageSelector: '.location__image',
+  likeBtnSelector: '.location__like-btn',
+  numLikesSelector: '.location__num-likes',
+  deleteBtnSelector: '.location__delete-btn',
+  titleSelector: '.location__name',
+  deleteBtnActiveClassName: 'location__delete-btn_active',
+  likeBtnActiveClassName: 'location__like-btn_active',
 };

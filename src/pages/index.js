@@ -24,7 +24,8 @@ import {
   profileAvatarOverlaySelector,
   nameOfConfirmationPromptForm,
   nameOfProfileImgChangeForm,
-  submitBtnTextWhileProcessing
+  submitBtnTextWhileProcessing,
+  cardCssObj
 } from '../utils/constants.js';
 
 import './index.css';
@@ -59,8 +60,11 @@ import './index.css';
       items: items,
       renderer: (cardData) => {
         const newCardElement = getNewCardElement(
-          cardData,
           cardTemplateSelector,
+          {
+            cardInfo: cardData,
+            css: cardCssObj
+          },
           {
             handleCardClick: () => popupWithImage.open(cardData.link, cardData.name),
             getUpdatedNumLikesFromApiAfterUserAction: handleLikingCard,
@@ -214,12 +218,11 @@ import './index.css';
         })
           .then(({ name, link, _id }) => {
             const newCardElement = getNewCardElement(
-              { 
-                name,
-                link,
-                id: _id
-              }, 
               cardTemplateSelector,
+              {
+                cardInfo: { name, link, id: _id },
+                css: cardCssObj
+              },
               { 
                 handleCardClick: () => popupWithImage.open(link, name),
                 handleDeleteCard: handleDeletingCard,

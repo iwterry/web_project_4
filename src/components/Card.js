@@ -1,8 +1,33 @@
+/*
+  Note: I change how Card class is defined so that it is easier to
+  understand what arguments are used for the constructor, better IDE support,
+  and decoupling this JavaScript class from the actual CSS selectors and class names.
+*/
+
 export default class Card {
 
   constructor(
-    { id,  name, link, initialNumLikes=0, isLiked=false, isOwner=true }, 
-    cardTemplateSelector, 
+    cardTemplateSelector,
+    { 
+      cardInfo: {
+        name,
+        link,
+        id,
+        initialNumLikes=0, 
+        isLiked=false, 
+        isOwner=true
+      },
+      css: {
+        cardSelector, 
+        imageSelector, 
+        titleSelector,
+        likeBtnSelector,
+        deleteBtnSelector,
+        numLikesSelector,
+        likeBtnActiveClassName,
+        deleteBtnActiveClassName
+      } 
+    },
     { handleCardClick, getUpdatedNumLikesFromApiAfterUserAction, handleDeleteCard }
   ) {
 
@@ -18,9 +43,29 @@ export default class Card {
     this._handleDeleteCard = handleDeleteCard;
    
     this._templateSelector = cardTemplateSelector;
-    this._domElements = {};
+    this._css = {
+      cardSelector,
+      imageSelector, 
+      titleSelector,
+      likeBtnSelector,
+      deleteBtnSelector,
+      numLikesSelector,
+      likeBtnActiveClassName,
+      deleteBtnActiveClassName
+    };
 
-    if(Card._cards == null) { // just a way to create a static property
+    this._domElements = {
+      card: null,
+      image: null,
+      likeBtn: null,
+      numLikes: null,
+      deleteBtn: null,
+      title: null
+    }; 
+    
+    // I am listing the _css and _domElements properties for readability and IDE support
+
+    if(Card._cards == null) { // just one way to create a static property
       Card._cards = new Map();
     }
 
@@ -44,22 +89,21 @@ export default class Card {
 
   _initDomElements() {
     const cardElement = this._getPlainCardElement();
+    const { _css: css, _domElements: domElements } = this;
 
-    this._domElements = {
-      card: cardElement,
-      image: cardElement.querySelector('.location__image'),
-      likeBtn: cardElement.querySelector('.location__like-btn'),
-      numLikes: cardElement.querySelector('.location__num-likes'),
-      deleteBtn: cardElement.querySelector('.location__delete-btn'),
-      title: cardElement.querySelector('.location__name')
-    };
+    domElements.card = cardElement;
+    domElements.image = cardElement.querySelector(css.imageSelector);
+    domElements.likeBtn = cardElement.querySelector(css.likeBtnSelector);
+    domElements.numLikes = cardElement.querySelector(css.numLikesSelector);
+    domElements.deleteBtn = cardElement.querySelector(css.deleteBtnSelector);
+    domElements.title = cardElement.querySelector(css.titleSelector);
   }
 
   _getPlainCardElement() {
     const cardTemplateElement = document.querySelector(this._templateSelector);
     const plainCardElement = cardTemplateElement
       .content
-      .querySelector('.location')
+      .querySelector(this._css.cardSelector)
       .cloneNode(true);
 
     return plainCardElement;
@@ -73,7 +117,7 @@ export default class Card {
     domElements.image.alt = this._title;
 
     if(this._isOwner) {
-      domElements.deleteBtn.classList.add('location__delete-btn_active');
+      domElements.deleteBtn.classList.add(this._css.deleteBtnActiveClassName);
     }
     this._updateLikeInfoDom(this._initialNumLikes);
   }
@@ -87,12 +131,12 @@ export default class Card {
   }
 
   _likingCard(numLikes) {
-    this._domElements.likeBtn.classList.add('location__like-btn_active');
+    this._domElements.likeBtn.classList.add(this._css.likeBtnActiveClassName);
     this._updateNumLikes(numLikes);
   }
 
   _unlikingCard(numLikes) {
-    this._domElements.likeBtn.classList.remove('location__like-btn_active');
+    this._domElements.likeBtn.classList.remove(this._css.likeBtnActiveClassName);
     this._updateNumLikes(numLikes);
   }
 
