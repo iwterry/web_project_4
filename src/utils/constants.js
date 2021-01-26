@@ -47,6 +47,9 @@ export const cardPopupImageTitleSelector = '.image-popup__title';
 
 export const submitBtnTextWhileProcessing = 'Saving...';
 
+export const authToken = 'f9c51bc0-ecec-42b1-bdb4-bcfabdba3e4f';
+
+
 // not meant to be exported by themselves at this time; only saved to reduce duplication
 const submitBtnSelector = '.project-form__submit-btn';
 const disabledSubmitBtnClassName = 'project-form__submit-btn_disabled';

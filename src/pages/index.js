@@ -3,6 +3,7 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import Api from '../components/Api.js';
 import UserInfo from '../components/UserInfo.js';
 import { getNewCardElement } from '../utils/helpers.js';
 
@@ -25,36 +26,13 @@ import {
   nameOfConfirmationPromptForm,
   nameOfProfileImgChangeForm,
   submitBtnTextWhileProcessing,
-  cardCssObj
+  cardCssObj,
+  authToken
 } from '../utils/constants.js';
 
 import './index.css';
 
 (function main() {
-  const userApiEndpoint = 'https://around.nomoreparties.co/v1/group-8/users/me';
-  const cardsApiEndpoint = 'https://around.nomoreparties.co/v1/group-8/cards';
-  const cardLikesApiEndpointBase = 'https://around.nomoreparties.co/v1/group-8/cards/likes';
-  const userAvatarApiEndpoint = 'https://around.nomoreparties.co/v1/group-8/users/me/avatar';
-
-  function fetchData({url, method='GET', additionalHeaderProps={}, body=null}) {
-    const init = {
-      method,
-      headers: {
-        authorization: 'f9c51bc0-ecec-42b1-bdb4-bcfabdba3e4f',
-        ...additionalHeaderProps
-      }
-    };
-
-    if(body !== null) {
-      init.body = body;
-    }
-
-    return fetch(url, init).then((res) => {
-      if(res.ok) return res.json();
-      else return Promise.reject(res.status);
-    });
-  }
-  
   function getCardListSection(items, popupWithImage) {
     return new Section({ 
       items: items,
@@ -77,10 +55,7 @@ import './index.css';
   }
 
   function handleLikingCard(cardId, isLiking) {
-    return fetchData({
-      url: `${cardLikesApiEndpointBase}/${cardId}`,
-      method: isLiking ? 'PUT' : 'DELETE'
-    })
+    return api.updateCardLikes(cardId, isLiking)
       .then(({ likes }) => likes.length)
       .catch((err) => console.log(`Error: ${err}`));
   }
@@ -99,9 +74,32 @@ import './index.css';
     }
   );
 
+  const userInfo = new UserInfo({
+    nameOfUserSelector: profileNameSelector,
+    descriptionAboutUserSelector: profileSelfDescriptionSelector,
+    avatarForUserSelector: profileAvatarSelector,
+    avatarOverlaySelector: profileAvatarOverlaySelector
+  }, () => popupWithProfileImgChangeForm.open());
+
+  const api = new Api({
+    headers: {
+      authorization: authToken
+    }
+  });
+
   let cardListSection = getCardListSection([], popupWithImage);
-  
-  fetchData({ url: cardsApiEndpoint })
+
+  api.getUserProfile()
+    .then(({ _id, name, about, avatar }) => {
+      userInfo.setUserInfo({
+        id: _id,
+        name: name,
+        description: about,
+        avatarLink: avatar
+      });
+
+      return api.getInitialCards();
+    })    
     .then((cardsFromApi) => {
       const { id: userId } = userInfo.getUserInfo();
       const cards = cardsFromApi.map(({ name, link, likes, _id, owner }) => { 
@@ -110,7 +108,7 @@ import './index.css';
         const isUserTheOwner = owner._id === userId;
 
         console.log(userId, isCardLikedByUser, likes);
-        console.log(owner);
+
         return { 
           name, 
           link, 
@@ -120,17 +118,13 @@ import './index.css';
           isOwner: isUserTheOwner
         };
       });
+
       cardListSection = getCardListSection(cards, popupWithImage);
       cardListSection.renderItems();
     })
     .catch((err) => console.log(`Error: ${err}`));
 
-  const userInfo = new UserInfo({
-    nameOfUserSelector: profileNameSelector,
-    descriptionAboutUserSelector: profileSelfDescriptionSelector,
-    avatarForUserSelector: profileAvatarSelector,
-    avatarOverlaySelector: profileAvatarOverlaySelector
-  }, () => popupWithProfileImgChangeForm.open());
+
 
   const profileEditFormValidator = new FormValidator(
     settingsObj,
@@ -161,17 +155,7 @@ import './index.css';
 
         popupWithProfileEditForm.setSubmitBtnText(submitBtnTextWhileProcessing);
 
-        fetchData({
-          url: userApiEndpoint,
-          method: 'PATCH',
-          additionalHeaderProps: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            name: profileName,
-            about: aboutMe
-          })
-        })
+        api.updateUserProfile(profileName, aboutMe)
           .then(({ name, about }) => {
             userInfo.setUserInfo({
               name,
@@ -205,17 +189,7 @@ import './index.css';
 
         popupWithCardCreationForm.setSubmitBtnText(submitBtnTextWhileProcessing);
 
-        fetchData({
-          url: cardsApiEndpoint,
-          method: 'POST',
-          additionalHeaderProps: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            name: locationTitle,
-            link: imageLink
-          })
-        })
+        api.createCard(locationTitle, imageLink)
           .then(({ name, link, _id }) => {
             const newCardElement = getNewCardElement(
               cardTemplateSelector,
@@ -257,10 +231,7 @@ import './index.css';
 
         const { id: cardId } = popupWithConfirmationPromptForm.getInputValues();
 
-        fetchData({
-          url: `${cardsApiEndpoint}/${cardId}`,
-          method: 'DELETE'
-        })
+        api.deleteCard(cardId)
           .then(() => Card.delete(cardId))
           .catch((err) => console.log(`Error: ${err}`))
           .finally(() => popupWithConfirmationPromptForm.close());
@@ -278,20 +249,11 @@ import './index.css';
         evt.preventDefault();
 
         const { avatarLink } = popupWithProfileImgChangeForm.getInputValues();
-
         const originalText = popupWithProfileImgChangeForm.getSubmitBtnText();
+
         popupWithProfileImgChangeForm.setSubmitBtnText('Saving...');
 
-        fetchData({
-          url: userAvatarApiEndpoint,
-          method: 'PATCH',
-          additionalHeaderProps: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            avatar: avatarLink
-          })
-        })
+        api.updateUserAvatar(avatarLink)
           .then(({ avatar }) => userInfo.setUserInfo({ avatarLink: avatar }))
           .catch((err) => console.log( `Error: ${err}`))
           .finally(() => {
@@ -335,22 +297,6 @@ import './index.css';
   cardCreationFormValidator.enableValidation();
   profileImgChangeFormValidator.enableValidation();
   
-
-
-
-  function addUserToDom({ name, about, avatar, _id }) {
-    userInfo.setUserInfo({
-      id: _id,
-      name: name,
-      description: about,
-      avatarLink: avatar
-    });
-  }
-
-  fetchData({ url: userApiEndpoint })
-    .then(addUserToDom)
-    .catch((err) => console.log(`Error: ${err}`));
-
 })();
 
 
