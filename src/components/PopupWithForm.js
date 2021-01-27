@@ -72,7 +72,20 @@ export default class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
-    this._formElement.addEventListener('submit', this._handleFormSubmit);
+
+    this._formElement.addEventListener('submit', (evt) => {
+      this._handleFormSubmit(
+        evt, 
+        {
+          enableSubmitBtn: () => this._enableSubmitBtn(),
+          disableSubmitBtn: () => this._disableSubmitBtn()
+        }
+      );
+      /*
+        Providing the client the ability to disable / enable the submit button as the
+        form is being submitted. For completeness and generality both options are provided.
+      */
+    });
   }
 
   open() {

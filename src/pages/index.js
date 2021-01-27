@@ -55,8 +55,15 @@ import './index.css';
   const popupWithConfirmationPromptForm = new PopupWithForm(
     nameOfConfirmationPromptForm,
     {
-      handleFormSubmit: (evt) => {
+      handleFormSubmit: (evt, { disableSubmitBtn }) => {
         evt.preventDefault();
+        disableSubmitBtn(); 
+        /*
+          Note: Although not part of the project requirements, disabling submit button
+          to prevent multiple simulanteously submissions. These sort of submissions are
+          would be bad for the server and could produce other sorts of errors.
+        */
+
         handleFormSubmitForConfirmationPromptForm(popupWithConfirmationPromptForm, api);
       }
     }, 
@@ -95,8 +102,10 @@ import './index.css';
   const popupWithProfileEditForm = new PopupWithForm(
     nameOfProfileEditForm,
     {
-      handleFormSubmit: (evt) => {
+      handleFormSubmit: (evt, { disableSubmitBtn }) => {
         evt.preventDefault();
+        disableSubmitBtn();
+
         handleFormSubmitForProfileEditForm(popupWithProfileEditForm, api, userInfo);
       },
       performActionPriorToFormOpening: () => {
@@ -109,8 +118,10 @@ import './index.css';
   const popupWithCardCreationForm = new PopupWithForm(
     nameOfCardCreationForm,
     {
-      handleFormSubmit: (evt) => {
+      handleFormSubmit: (evt, { disableSubmitBtn }) => {
         evt.preventDefault();
+        disableSubmitBtn();
+
         handleFormSubmitForCardCreationForm({
           popupWithCardCreationForm,
           api,
@@ -129,8 +140,10 @@ import './index.css';
   const popupWithProfileImgChangeForm = new PopupWithForm(
     nameOfProfileImgChangeForm,
     {
-      handleFormSubmit: (evt) => {
+      handleFormSubmit: (evt, {disableSubmitBtn}) => {
         evt.preventDefault();
+
+        disableSubmitBtn();
         handleFormSubmitForProfileImgChangeForm(popupWithProfileImgChangeForm, api, userInfo);
       },
       performActionPriorToFormOpening: () => {
