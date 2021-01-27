@@ -7,9 +7,9 @@
 
 **Description of the project and its functionality**
 
-This is a project about allowing a user to create a profile name with a description and
-creating, deleting, viewing, and liking different locations / places that are chosen
-by the user.
+This is a project about allowing a user to create and edit their profile 
+(name, description, and avatar) and to create, delete, view, and like different 
+locations / places on cards that are chosen by the user.
 
 **Description of technologies and techniques used**
 
@@ -34,10 +34,12 @@ by the user.
   * to compress and bundle CSS and JS files,
   * to add CSS vendor prefixes, and
   * to make JS code more compatible with older browsers.
-
+* Using asynchronous programming with JavaScript Promises to get data from a server 
+by making API calls
 **Links**
 
-* [Link to the project 4 specification on Figma](https://www.figma.com/file/mUgu8OSHWE0M6p6vfwmdu9/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1) 
-* [Link to the project 5 specification on Figma](https://www.figma.com/file/avLHzpJw2dmU2NaDATZ6CX/Sprint-5%3A-Around-The-U.S.-%2F-desktop-%2B-mobile?node-id=0%3A1)
-* [Link to the project 6 specification on Figma](https://www.figma.com/file/KUbYgXnYElfzxCbcrlsOCE/Sprint-6%3A-Around-The-U.S.?node-id=0%3A1)
+* [Link to the sprint 4 specification on Figma](https://www.figma.com/file/mUgu8OSHWE0M6p6vfwmdu9/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1) 
+* [Link to the sprint 5 specification on Figma](https://www.figma.com/file/avLHzpJw2dmU2NaDATZ6CX/Sprint-5%3A-Around-The-U.S.-%2F-desktop-%2B-mobile?node-id=0%3A1)
+* [Link to the sprint 6 specification on Figma](https://www.figma.com/file/KUbYgXnYElfzxCbcrlsOCE/Sprint-6%3A-Around-The-U.S.?node-id=0%3A1)
+* [Link to sprint 9 specification on Figma](https://www.figma.com/file/xQVeb8gprjukPVKXiLXS5T/Sprint-9%3A-Applied-JavaScript?node-id=1%3A352)
 * [Link to my implementation on GitHub Pages](https://iwterry.github.io/web_project_4/index.html)
