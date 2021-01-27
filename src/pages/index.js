@@ -95,8 +95,8 @@ import './index.css';
         evt.preventDefault();
         handleFormSubmitForProfileEditForm(popupWithProfileEditForm, api, userInfo);
       },
-      peformActionPriorToFormOpening: () => {
-        profileEditFormValidator.showNoErrors();
+      performActionPriorToFormOpening: () => {
+        profileEditFormValidator.showNoErrorsButDisableSubmitBtnWhenHasAnError();
       }
     }, 
     popupFormCssObj
@@ -115,8 +115,8 @@ import './index.css';
           cardListSection
         });
       },
-      peformActionPriorToFormOpening: () => {
-        cardCreationFormValidator.showNoErrors(true);
+      performActionPriorToFormOpening: () => {
+        cardCreationFormValidator.showNoErrorsButDisableSubmitBtnWhenHasAnError();
       }
     }, 
     popupFormCssObj
@@ -129,8 +129,8 @@ import './index.css';
         evt.preventDefault();
         handleFormSubmitForProfileImgChangeForm(popupWithProfileImgChangeForm, api, userInfo);
       },
-      peformActionPriorToFormOpening: () => {
-        profileImgChangeFormValidator.showNoErrors(true);
+      performActionPriorToFormOpening: () => {
+        profileImgChangeFormValidator.showNoErrorsButDisableSubmitBtnWhenHasAnError();
       }
     }, 
     popupFormCssObj

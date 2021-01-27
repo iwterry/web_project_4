@@ -3,7 +3,7 @@ import Popup from "./Popup.js";
 export default class PopupWithForm extends Popup {
   constructor(
     nameOfForm, 
-    { handleFormSubmit, peformActionPriorToFormOpening },
+    { handleFormSubmit, performActionPriorToFormOpening=null },
     { 
       popupSelector,
       openedPopupClassName,
@@ -31,7 +31,7 @@ export default class PopupWithForm extends Popup {
     this._disabledSubmitBtnClassName = disabledSubmitBtnClassName;
 
     this._handleFormSubmit = handleFormSubmit;
-    this._performActionPriorToFormOpening = peformActionPriorToFormOpening;
+    this._performActionPriorToFormOpening = performActionPriorToFormOpening;
   }
 
   getInputValues() {
@@ -52,10 +52,15 @@ export default class PopupWithForm extends Popup {
   _disableSubmitBtn() {
     this._submitBtnElement.disabled = true;
     this._submitBtnElement.classList.add(this._disabledSubmitBtnClassName);
-
-    /* Note: while it is true that this functionality exist in the class for form validations,
-    the purpose is not the same, as this class is not concerned with validating input. */
   }
+
+  _enableSubmitBtn() {
+    this._submitBtnElement.disabled = false;
+    this._submitBtnElement.classList.remove(this._disabledSubmitBtnClassName);
+  }
+
+    /* Note: This class  exist in the class for form validations,
+    the purpose is not the same, as this class is not concerned with validating input. */
 
   getSubmitBtnText() {
     return this._submitBtnElement.textContent;
@@ -71,7 +76,15 @@ export default class PopupWithForm extends Popup {
   }
 
   open() {
-    if(this._performActionPriorToFormOpening != null) {
+    this._enableSubmitBtn(); 
+    /*     
+      Since this class is not responsible for validation, it will automatically allow
+      submit button to be enabled on forms. If the client wants to disable the
+      submit button, then that can be done using the performActionPriorToFormOpening
+      callback given in the constructor. 
+    */
+
+    if(typeof this._performActionPriorToFormOpening === 'function') {
       // checking to see if there are any actions that the user of the class wants to perform
       this._performActionPriorToFormOpening();
     }

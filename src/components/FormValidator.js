@@ -71,9 +71,13 @@ export default class FormValidator {
     inputElement.addEventListener('input', () => this._handleInputValidation(inputElement));
   }
 
-  showNoErrors(isButtonDisabled=false) {
+  _hideAllInputErrors() {
     this._inputElements.forEach((inputElement) => this._hideInputError(inputElement));
-    isButtonDisabled ? this._disableButton() : this._enableButton();
+  }
+
+  showNoErrorsButDisableSubmitBtnWhenHasAnError() {
+    this._hideAllInputErrors();
+    this._hasSomeInvalidInput() ? this._disableButton() : this._enableButton();
   }
 
   enableValidation() {
