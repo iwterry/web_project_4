@@ -1,5 +1,5 @@
 /*
-  Note: I change how Card class is defined so that it is easier to
+  Note: I changee how Card class is defined so that it is easier to
   understand what arguments are used for the constructor, better IDE support,
   and decoupling this JavaScript class from the actual CSS selectors and class names.
 */
@@ -150,10 +150,18 @@ export default class Card {
 
   _handleClickedLikeBtn() {
     this._getUpdatedNumLikesFromApiAfterUserAction(this._id, !this._isLiked)
-      .then((numLikes) => {
-        this._isLiked = !this._isLiked;
-        this._updateLikeInfoDom(numLikes);
+      .then(({ numLikes }) => {
+        if(typeof numLikes === 'number') {
+          this._isLiked = !this._isLiked;
+          this._updateLikeInfoDom(numLikes);
+        }
       });
+
+      /* 
+        Note: There is no "catch" because if numLikes is not a number, then an error
+        occurred and it was handled by the getUpdatedNumLikesFromApiAfterUserAction callback.
+        As far as the responsibility of this class goes, there is no further action to take.
+      */
   }
 
   _addEventListenersToDomElements() {
