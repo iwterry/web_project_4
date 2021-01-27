@@ -1,8 +1,6 @@
 import Card from '../components/Card.js';
-import Section from '../components/Section.js';
 import { 
   cardCssObj, 
-  cardsCollectionSelector, 
   cardTemplateSelector, 
   submitBtnTextWhileProcessing 
 } from './constants.js';
@@ -16,8 +14,7 @@ export function logErrors(err) {
   console.log(`Error: ${err}`);
 }
 
-// not meant to be export at this time
-function getNewCardElement(
+export function getNewCardElement(
   cardData,
   { popupWithImage, popupWithConfirmationPromptForm, api }
 ) {
@@ -46,28 +43,7 @@ function getNewCardElement(
   return newCard.generateNewCardElement();
 }
 
-export function getNewCardListSection(
-  items,
-  { popupWithImage, api, popupWithConfirmationPromptForm }
-) {
-  const cardListSection = new Section({ 
-    items: items,
-    renderer: (cardData) => {
-      const newCardElement = getNewCardElement(
-        cardData,
-        { popupWithConfirmationPromptForm, api, popupWithImage }
-      );
-      cardListSection.addItem(newCardElement);
-    }
-  }, cardsCollectionSelector);
-
-  return cardListSection;
-}
-
-export function displayInitialCards(
-  cardsFromApi, 
-  { userInfo, popupWithImage, popupWithConfirmationPromptForm, api }
-) {
+export function displayInitialCards(cardsFromApi, userInfo, cardListSection) {
   const { id: userId } = userInfo.getUserInfo();
 
   const cards = cardsFromApi
@@ -85,13 +61,7 @@ export function displayInitialCards(
       };
     });
 
-  const cardListSection = getNewCardListSection(
-    cards, 
-    { popupWithImage, api, popupWithConfirmationPromptForm }
-  );
-
-  cardListSection.renderItems();
-  return cardListSection;
+  cardListSection.renderItems(cards);
 }
 
 export function handleFormSubmitForProfileEditForm(popupWithProfileEditForm, api, userInfo) {

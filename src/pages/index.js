@@ -3,6 +3,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import Api from '../components/Api.js';
 import UserInfo from '../components/UserInfo.js';
+import Section from '../components/Section.js';
 
 import { 
   profileNameSelector,
@@ -19,12 +20,13 @@ import {
   profileAvatarOverlaySelector,
   nameOfConfirmationPromptForm,
   nameOfProfileImgChangeForm,
-  authToken
+  authToken,
+  cardsCollectionSelector
 } from '../utils/constants.js';
 
 import {
   displayInitialCards,
-  getNewCardListSection,
+  getNewCardElement,
   handleFormSubmitForCardCreationForm,
   handleFormSubmitForConfirmationPromptForm,
   handleFormSubmitForProfileEditForm,
@@ -33,6 +35,7 @@ import {
 } from '../utils/helpers';
 
 import './index.css';
+
 
 (function main() {
   // ########## creating objects ###########
@@ -60,18 +63,19 @@ import './index.css';
     popupFormCssObj
   );
 
-  let cardListSection = getNewCardListSection(
-    [], 
-    { popupWithImage, api, popupWithConfirmationPromptForm }
-  );
-  /*
-    Note: This cardListSection assignment should be temporary. Since getting the initial data
-    happens asynchronously, I will perform the reassignment once I get the data. There are other
-    approaches that would work as well, though.
+  const cardListSection = new Section(
+    { 
+      renderer: (cardData) => {
+        const newCardElement = getNewCardElement(
+          cardData,
+          { popupWithConfirmationPromptForm, api, popupWithImage }
+        );
 
-    Another approach is to use async/await, but since the course did not go into this
-    feature, I will stick to using Promises with "then" and "catch" pattern.
-  */
+        cardListSection.addItem(newCardElement);
+      }
+    }, 
+    cardsCollectionSelector
+  );
 
   const profileEditFormValidator = new FormValidator(
     formValidatorCssObj,
@@ -149,12 +153,7 @@ import './index.css';
 
     return api.getInitialCards();
   })    
-  .then((cardsFromApi) => {
-    cardListSection = displayInitialCards(
-      cardsFromApi, 
-      { userInfo, popupWithConfirmationPromptForm, popupWithImage, api }
-    );
-  })
+  .then((cardsFromApi) => displayInitialCards(cardsFromApi, userInfo, cardListSection))
   .catch(logErrors);
 
 
