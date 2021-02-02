@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/iwterry/web_project_4/issues"
   },
-  "homepage": "https://github.com/iwterry/web_project_4#readme",
+  "homepage": "https://iwterry.github.io/web_project_4",
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
